@@ -55,6 +55,19 @@ nav {
 	display: flex;
 }
 
+.flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.flex-center-col {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
 .main-wrapper {
 	height: 100%;
 	width: 100%;
@@ -78,12 +91,19 @@ nav {
 }
 
 .projects {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
 	padding: 10px;
 	gap: 15px;
+}
+
+.add-project-wrapper {
+	justify-content: space-between;
+	padding: 10px;
+}
+
+.add-project-img {
+	height: min(64px, 2rem);
+	width: min(64px, 2rem);
+	cursor: pointer;
 }
 
 .project {
@@ -103,7 +123,4 @@ nav {
 	background-color: var(--nav-background);
 	color: var(--nav-color);
 	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }

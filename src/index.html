@@ -7,6 +7,57 @@
 		<title>Get it done!</title>
 	</head>
 	<body>
+		<div
+			class="modal fade"
+			id="addProjectModal"
+			tabindex="-1"
+			aria-labelledby="addProjectModalLabel"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="addProjectModalLabel">
+							Add new project:
+						</h1>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<div class="modal-body">
+						<form action="#" class="project-form" id="project-form">
+							<div class="input-wrapper">
+								Project name:
+								<input
+									type="text"
+									name="projectName"
+									id="project-name"
+								/>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button
+							type="button"
+							class="btn btn-secondary"
+							data-bs-dismiss="modal"
+						>
+							Close
+						</button>
+						<button
+							type="submit"
+							form="project-form"
+							class="btn btn-success"
+						>
+							Add
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- <form class="input-wrapper todo-form">
 			<input type="text" name="todo-name" />
 			<input
@@ -19,23 +70,29 @@
 		<div class="todos"></div> -->
 		<div class="site-wrapper">
 			<nav>
-				<div class="logo">GetItDone.com</div>
+				<div class="logo flex-center">GetItDone.com</div>
 			</nav>
 			<div class="flex main-wrapper">
 				<aside class="aside">
-					<div class="default-projects projects">
+					<div class="default-projects projects flex-center-col">
 						<div class="project">Placeholder Project</div>
 						<div class="project">Placeholder Project</div>
 					</div>
-					<p>
-						Add new project:
-						<img src="./icons/add-project.svg" alt="Add Project" />
-					</p>
+					<div class="add-project-wrapper flex-center">
+						<div class="flex-center">Projects:</div>
+						<div
+							class="add-project flex-center"
+							data-bs-toggle="modal"
+							data-bs-target="#addProjectModal"
+						></div>
+					</div>
 					<div class="projects"></div>
 				</aside>
 				<section class="main"></section>
 			</div>
-			<footer class="footer">&copy; Mateusz Nurzyński 2022</footer>
+			<footer class="footer flex-center">
+				&copy; Mateusz Nurzyński 2022
+			</footer>
 		</div>
 	</body>
 </html>
