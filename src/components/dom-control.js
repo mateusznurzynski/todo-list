@@ -89,6 +89,7 @@ export default (function DomControl() {
 				'project',
 				`${project.name}`
 			);
+			projectElement.setAttribute('data-project-id', project.id);
 			projectElement.appendChild(deleteProjectButton.cloneNode(true));
 			projectsElement.appendChild(projectElement);
 		});

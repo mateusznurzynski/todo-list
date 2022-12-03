@@ -3,6 +3,7 @@ import PubSub from 'pubsub-js';
 export default (function Project() {
 	const projects = [
 		{
+			id: 0,
 			name: 'test',
 		},
 	];
@@ -14,6 +15,7 @@ export default (function Project() {
 	function createProject(data) {
 		const state = {
 			name: data.get('projectName'),
+			id: projects.length,
 		};
 
 		projects.push(Object.assign({}, state));
