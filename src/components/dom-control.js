@@ -9,6 +9,7 @@ export default (function DomControl() {
 	const todosElement = document.querySelector('.todos');
 
 	const projectFormElement = document.querySelector('.project-form');
+	const projectsElement = document.querySelector('.user-projects');
 	const images = [
 		{
 			src: addProjectIcon,
@@ -21,6 +22,7 @@ export default (function DomControl() {
 	function initPage() {
 		loadImages();
 		addListeners();
+		Project.loadProjects();
 	}
 
 	function addListeners() {
@@ -63,6 +65,32 @@ export default (function DomControl() {
 				`Name: ${todo.name}`
 			);
 			todosElement.appendChild(todoElement);
+		});
+	}
+
+	PubSub.subscribe('projectsChanged', (msg, data) => {
+		clearProjects();
+		createProjectElements(data);
+	});
+
+	function clearProjects() {
+		projectsElement.innerHTML = '';
+	}
+
+	function createProjectElements(data) {
+		const deleteProjectButton = createDomElement(
+			'button',
+			'btn-delete-project',
+			'X'
+		);
+		data.forEach((project) => {
+			const projectElement = createDomElement(
+				'div',
+				'project',
+				`${project.name}`
+			);
+			projectElement.appendChild(deleteProjectButton.cloneNode(true));
+			projectsElement.appendChild(projectElement);
 		});
 	}
 

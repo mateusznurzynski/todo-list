@@ -25,12 +25,27 @@ html {
 	--aside-background: #afafaf;
 	--aside-color: black;
 	--aside-item: #8b8b8b;
+	--aside-item-btn: #686868;
 	--main-background: #d7d9ce;
 	--main-color: black;
+
+	--success: #28a745;
+	--info: #17a2b8;
+	--warning: #ffc107;
+	--danger: #dc3545;
+	--light: #f8f9fa;
+	--dark: #343a40;
+
+	--danger-hover: #fd3e51;
 }
 
 body {
 	background-color: var(--main-background);
+}
+
+button {
+	border: none;
+	outline: none;
 }
 
 .site-wrapper {
@@ -110,12 +125,33 @@ nav {
 	width: 100%;
 	height: 35px;
 	display: flex;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
 	background-color: var(--aside-item);
 	padding: 15px;
 	border-radius: 5px;
 	cursor: pointer;
+	position: relative;
+}
+
+.btn-delete-project {
+	display: none;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	right: 5px;
+	height: 25px;
+	width: 25px;
+	background-color: var(--danger);
+	color: white;
+}
+
+.btn-delete-project:hover {
+	background-color: var(--danger-hover);
+}
+
+.project:hover > .btn-delete-project {
+	display: flex;
 }
 
 .footer {

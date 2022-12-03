@@ -1,7 +1,15 @@
 import PubSub from 'pubsub-js';
 
 export default (function Project() {
-	const projects = [];
+	const projects = [
+		{
+			name: 'test',
+		},
+	];
+
+	function loadProjects() {
+		PubSub.publish('projectsChanged', projects);
+	}
 
 	function createProject(data) {
 		const state = {
@@ -13,5 +21,5 @@ export default (function Project() {
 		console.log(projects);
 	}
 
-	return { createProject };
+	return { createProject, loadProjects };
 })();
