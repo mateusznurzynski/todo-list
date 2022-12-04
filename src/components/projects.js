@@ -1,4 +1,5 @@
 import PubSub from 'pubsub-js';
+import { checkNameAvailability } from '../utils/utilities';
 
 export default (function Project() {
 	const projects = [
@@ -12,13 +13,15 @@ export default (function Project() {
 	}
 
 	function createProject(data) {
+		if (checkNameAvailability(data.get('projectName'), projects, 'name')) {
+			console.log('name taken');
+		}
 		const state = {
 			name: data.get('projectName'),
 		};
 
 		projects.push(Object.assign({}, state));
 		PubSub.publish('projectsChanged', projects);
-		console.log(projects);
 	}
 
 	return { createProject, loadProjects };

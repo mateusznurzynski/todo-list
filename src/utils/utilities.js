@@ -5,4 +5,8 @@ function createDomElement(type, classesString, innerHTML) {
 	return element;
 }
 
-export { createDomElement };
+function checkNameAvailability(name, array, key) {
+	return array.some((object) => object[key] === name);
+}
+
+export { createDomElement, checkNameAvailability };
