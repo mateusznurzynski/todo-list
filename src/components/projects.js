@@ -2,14 +2,27 @@ import PubSub from 'pubsub-js';
 import { checkNameAvailability, checkStringLength } from '../utils/utilities';
 
 export default (function Project() {
-	const projects = [
+	let projects = [
 		{
 			name: 'test',
 		},
 	];
 
+	const defaultProject = {
+		removeProject: () => {
+			console.log('removed');
+		},
+	};
+
 	function loadProjects() {
 		PubSub.publish('projectsChanged', projects);
+		PubSub.subscribe('deleteProjectClicked', (msg, e) => {
+			const deletedProjectName = e.target.previousElementSibling.title;
+			projects = projects.filter(
+				(project) => project.name !== deletedProjectName
+			);
+			PubSub.publish('projectsChanged', projects);
+		});
 	}
 
 	function createProject(data) {
@@ -21,7 +34,7 @@ export default (function Project() {
 			name: data.get('projectName'),
 		};
 
-		projects.push(Object.assign({}, state));
+		projects.push(Object.assign({}, defaultProject, state));
 		PubSub.publish('projectsChanged', projects);
 	}
 

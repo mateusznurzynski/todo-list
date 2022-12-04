@@ -20,6 +20,10 @@ export default (function DomControl() {
 	];
 
 	function initPage() {
+		PubSub.subscribe('projectsChanged', (msg, data) => {
+			clearProjects();
+			createProjectElements(data);
+		});
 		loadImages();
 		addListeners();
 		Project.loadProjects();
@@ -68,11 +72,6 @@ export default (function DomControl() {
 		});
 	}
 
-	PubSub.subscribe('projectsChanged', (msg, data) => {
-		clearProjects();
-		createProjectElements(data);
-	});
-
 	function clearProjects() {
 		projectsElement.innerHTML = '';
 	}
@@ -83,13 +82,18 @@ export default (function DomControl() {
 			'btn-delete-project',
 			'X'
 		);
+
 		data.forEach((project) => {
 			const projectElement = createDomElement(
 				'div',
 				'project',
 				`<div title='${project.name}' class='project-name'>${project.name}</div>`
 			);
-			projectElement.appendChild(deleteProjectButton.cloneNode(true));
+			const button = deleteProjectButton.cloneNode(true);
+			projectElement.appendChild(button);
+			button.addEventListener('click', (e) => {
+				PubSub.publish('deleteProjectClicked', e);
+			});
 			projectsElement.appendChild(projectElement);
 		});
 	}
