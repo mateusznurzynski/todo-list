@@ -1,5 +1,5 @@
 import PubSub from 'pubsub-js';
-import { checkNameAvailability } from '../utils/utilities';
+import { checkNameAvailability, checkStringLength } from '../utils/utilities';
 
 export default (function Project() {
 	const projects = [
@@ -13,15 +13,28 @@ export default (function Project() {
 	}
 
 	function createProject(data) {
-		if (checkNameAvailability(data.get('projectName'), projects, 'name')) {
-			alert('Name already taken!');
+		if (!validateProjectName(data.get('projectName'))) {
+			return false;
 		}
+
 		const state = {
 			name: data.get('projectName'),
 		};
 
 		projects.push(Object.assign({}, state));
 		PubSub.publish('projectsChanged', projects);
+	}
+
+	function validateProjectName(name) {
+		if (!checkStringLength(name, 1, 50)) {
+			alert('Project name must be between 1 to 50 characters');
+			return false;
+		}
+		if (!checkNameAvailability(name, projects, 'name')) {
+			alert(`Name "${name}" already taken`);
+			return false;
+		}
+		return true;
 	}
 
 	return { createProject, loadProjects };

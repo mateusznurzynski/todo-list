@@ -6,7 +6,19 @@ function createDomElement(type, classesString, innerHTML) {
 }
 
 function checkNameAvailability(name, array, key) {
-	return array.some((object) => object[key] === name);
+	if (array.some((object) => object[key] === name)) {
+		return false;
+	} else {
+		return true;
+	}
 }
 
-export { createDomElement, checkNameAvailability };
+function checkStringLength(string, min, max) {
+	if (string.length <= max && string.length >= min) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+export { createDomElement, checkNameAvailability, checkStringLength };
