@@ -134,6 +134,12 @@ nav {
 	position: relative;
 }
 
+.project-name {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
 .btn-delete-project {
 	display: none;
 	justify-content: center;

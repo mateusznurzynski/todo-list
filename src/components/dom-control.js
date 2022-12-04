@@ -87,7 +87,7 @@ export default (function DomControl() {
 			const projectElement = createDomElement(
 				'div',
 				'project',
-				`${project.name}`
+				`<div title='${project.name}' class='project-name'>${project.name}</div>`
 			);
 			projectElement.appendChild(deleteProjectButton.cloneNode(true));
 			projectsElement.appendChild(projectElement);

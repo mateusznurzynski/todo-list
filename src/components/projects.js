@@ -14,7 +14,7 @@ export default (function Project() {
 
 	function createProject(data) {
 		if (checkNameAvailability(data.get('projectName'), projects, 'name')) {
-			console.log('name taken');
+			alert('Name already taken!');
 		}
 		const state = {
 			name: data.get('projectName'),
