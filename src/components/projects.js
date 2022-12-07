@@ -10,12 +10,15 @@ export default (function Project() {
 					name: 'test-todo',
 				},
 			],
+			getName() {
+				return this.name;
+			},
 		},
 	];
 
 	const defaultProject = {
-		removeProject: () => {
-			console.log('removed');
+		getName() {
+			return this.name;
 		},
 	};
 
@@ -58,5 +61,12 @@ export default (function Project() {
 		return true;
 	}
 
-	return { createProject, loadProjects };
+	function getProject(projectName) {
+		const project = projects.find(
+			(project) => project.getName() === projectName
+		);
+		return project;
+	}
+
+	return { createProject, loadProjects, getProject };
 })();

@@ -107,6 +107,7 @@ export default (function DomControl() {
 			});
 			projectElement.addEventListener('click', (e) => {
 				renderProject(project.name);
+				clearMainElement();
 			});
 			projectsElement.appendChild(projectElement);
 		});
@@ -114,6 +115,11 @@ export default (function DomControl() {
 
 	function renderProject(projectName) {
 		console.log('rendered: ', projectName);
+		const project = Project.getProject(projectName);
+	}
+
+	function clearMainElement() {
+		mainElement.innerHTML = '';
 	}
 
 	return {
