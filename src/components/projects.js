@@ -36,6 +36,8 @@ export default (function Project() {
 
 		projects.push(Object.assign({}, defaultProject, state));
 		PubSub.publish('projectsChanged', projects);
+
+		return true;
 	}
 
 	function validateProjectName(name) {

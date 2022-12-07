@@ -3,6 +3,7 @@ import Todo from './todos';
 import Project from './projects';
 import { createDomElement } from '../utils/utilities';
 import addProjectIcon from '../icons/add-project.svg';
+import { Modal } from 'bootstrap';
 
 export default (function DomControl() {
 	const todoFormElement = document.querySelector('.todo-form');
@@ -10,6 +11,8 @@ export default (function DomControl() {
 
 	const projectFormElement = document.querySelector('.project-form');
 	const projectsElement = document.querySelector('.user-projects');
+
+	const projectModalElement = document.querySelector('#addProjectModal');
 	const images = [
 		{
 			src: addProjectIcon,
@@ -38,7 +41,12 @@ export default (function DomControl() {
 		projectFormElement.addEventListener('submit', (e) => {
 			e.preventDefault();
 			const data = new FormData(projectFormElement);
-			Project.createProject(data);
+			const created = Project.createProject(data);
+			if (created) {
+				e.target.reset();
+				const modal = Modal.getInstance(projectModalElement);
+				modal.hide();
+			}
 		});
 	}
 
