@@ -106,8 +106,8 @@ export default (function DomControl() {
 				PubSub.publish('deleteProjectClicked', e);
 			});
 			projectElement.addEventListener('click', (e) => {
-				renderProject(project.name);
 				clearMainElement();
+				renderProject(project.name);
 			});
 			projectsElement.appendChild(projectElement);
 		});
@@ -116,6 +116,20 @@ export default (function DomControl() {
 	function renderProject(projectName) {
 		console.log('rendered: ', projectName);
 		const project = Project.getProject(projectName);
+
+		const projectHeaderElement = createDomElement(
+			'h2',
+			'main-project-header',
+			`${project.name}:`
+		);
+		mainElement.appendChild(projectHeaderElement);
+
+		renderTodos(project);
+	}
+
+	function renderTodos(project) {
+		const todos = project.getTodos();
+		console.log(todos);
 	}
 
 	function clearMainElement() {

@@ -13,12 +13,18 @@ export default (function Project() {
 			getName() {
 				return this.name;
 			},
+			getTodos() {
+				return this.todos;
+			},
 		},
 	];
 
 	const defaultProject = {
 		getName() {
 			return this.name;
+		},
+		getTodos() {
+			return this.todos;
 		},
 	};
 
