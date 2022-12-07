@@ -4,7 +4,12 @@ import { checkNameAvailability, checkStringLength } from '../utils/utilities';
 export default (function Project() {
 	let projects = [
 		{
-			name: 'test',
+			name: 'test-project',
+			todos: [
+				{
+					name: 'test-todo',
+				},
+			],
 		},
 	];
 
@@ -32,6 +37,7 @@ export default (function Project() {
 
 		const state = {
 			name: data.get('projectName'),
+			todos: [],
 		};
 
 		projects.push(Object.assign({}, defaultProject, state));

@@ -160,6 +160,10 @@ nav {
 	display: flex;
 }
 
+.main {
+	width: 100%;
+}
+
 .footer {
 	height: 50px;
 	background-color: var(--nav-background);

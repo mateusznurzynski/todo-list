@@ -13,6 +13,8 @@ export default (function DomControl() {
 	const projectsElement = document.querySelector('.user-projects');
 
 	const projectModalElement = document.querySelector('#addProjectModal');
+
+	const mainElement = document.querySelector('.main');
 	const images = [
 		{
 			src: addProjectIcon,
@@ -100,10 +102,18 @@ export default (function DomControl() {
 			const button = deleteProjectButton.cloneNode(true);
 			projectElement.appendChild(button);
 			button.addEventListener('click', (e) => {
+				e.stopPropagation();
 				PubSub.publish('deleteProjectClicked', e);
+			});
+			projectElement.addEventListener('click', (e) => {
+				renderProject(project.name);
 			});
 			projectsElement.appendChild(projectElement);
 		});
+	}
+
+	function renderProject(projectName) {
+		console.log('rendered: ', projectName);
 	}
 
 	return {
