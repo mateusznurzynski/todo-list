@@ -98,7 +98,7 @@ export default (function Project() {
 	// TODOS
 
 	function createTodo(data, projectName, initial) {
-		const project = getProject(projectName);
+		const project = getProject(projectName, initial);
 		const todosArray = project.getTodos();
 
 		if (!validateTodoName(data.get('todo-name'), todosArray)) {

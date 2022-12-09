@@ -37,7 +37,8 @@ export default (function DomControl() {
 		});
 		PubSub.subscribe('todosChanged', (msg, projectName) => {
 			clearMainElement();
-			renderProject(projectName);
+			const initial = activeProject.type === 'initial' ? true : false;
+			renderProject(projectName, initial);
 		});
 		loadImages();
 		addListeners();
@@ -119,15 +120,15 @@ export default (function DomControl() {
 		const projectHeaderElement = createDomElement(
 			'h2',
 			'main-project-header',
-			`${project.name}:`
+			`${project.getName()}:`
 		);
 		mainElement.appendChild(projectHeaderElement);
 
-		renderTodoForm(project);
+		renderTodoForm(project, initial);
 		renderTodos(project);
 	}
 
-	function renderTodoForm(project) {
+	function renderTodoForm(project, initial) {
 		const todoFormElement = createDomElement(
 			'form',
 			'todo-form todo-container',
@@ -142,7 +143,7 @@ export default (function DomControl() {
 		todoFormElement.addEventListener('submit', (e) => {
 			e.preventDefault();
 			const formData = new FormData(e.target);
-			Project.createTodo(formData, project.getName());
+			Project.createTodo(formData, project.getName(), initial);
 		});
 		mainElement.appendChild(todoFormElement);
 	}
