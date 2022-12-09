@@ -29,6 +29,7 @@ export default (function DomControl() {
 		PubSub.subscribe('projectsChanged', (msg, data) => {
 			clearProjects();
 			createProjectElements(data);
+			refreshMainElement(data);
 		});
 		PubSub.subscribe('todosChanged', (msg, projectName) => {
 			clearMainElement();
@@ -160,6 +161,22 @@ export default (function DomControl() {
 
 	function clearMainElement() {
 		mainElement.innerHTML = '';
+	}
+
+	function refreshMainElement(projects) {
+		if (activeProject.type === 'initial') {
+			return false;
+		}
+		clearMainElement();
+		const project = projects.find(
+			(project) => project.getName() === activeProject.name
+		);
+
+		if (project) {
+			renderProject(project.getName());
+		} else {
+			console.log('load initial project');
+		}
 	}
 
 	return {
