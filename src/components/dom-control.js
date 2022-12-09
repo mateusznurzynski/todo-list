@@ -6,9 +6,6 @@ import addProjectIcon from '../icons/add-project.svg';
 import { Modal } from 'bootstrap';
 
 export default (function DomControl() {
-	const todoFormElement = document.querySelector('.todo-form');
-	const todosElement = document.querySelector('.todos');
-
 	const projectFormElement = document.querySelector('.project-form');
 	const projectsElement = document.querySelector('.user-projects');
 
@@ -35,11 +32,6 @@ export default (function DomControl() {
 	}
 
 	function addListeners() {
-		// todoFormElement.addEventListener('submit', (e) => {
-		// 	e.preventDefault();
-		// 	const data = new FormData(todoFormElement);
-		// 	Todo.addTodo(data);
-		// });
 		projectFormElement.addEventListener('submit', (e) => {
 			e.preventDefault();
 			const data = new FormData(projectFormElement);
@@ -124,7 +116,23 @@ export default (function DomControl() {
 		);
 		mainElement.appendChild(projectHeaderElement);
 
+		renderTodoForm();
 		renderTodos(project);
+	}
+
+	function renderTodoForm() {
+		const todoFormElement = createDomElement(
+			'form',
+			'todo-form todo-container',
+			`<input type="text" name="todo-name" id="todo-name" />
+		<input
+			type="submit"
+			name="todo-submit"
+			id="todo-submit"
+			class="todo-submit-btn"
+		/>`
+		);
+		mainElement.appendChild(todoFormElement);
 	}
 
 	function renderTodos(project) {
