@@ -11,6 +11,11 @@ export default (function DomControl() {
 	const projectModalElement = document.querySelector('#addProjectModal');
 
 	const mainElement = document.querySelector('.main');
+
+	const activeProject = {
+		type: 'normal',
+		name: 'test-project',
+	};
 	const images = [
 		{
 			src: addProjectIcon,
@@ -32,6 +37,7 @@ export default (function DomControl() {
 		loadImages();
 		addListeners();
 		Project.loadProjects();
+		renderProject(activeProject.name);
 	}
 
 	function addListeners() {
@@ -94,6 +100,8 @@ export default (function DomControl() {
 			projectElement.addEventListener('click', (e) => {
 				clearMainElement();
 				renderProject(project.name);
+				activeProject.name = project.name;
+				// will add activeProject.type later
 			});
 			projectsElement.appendChild(projectElement);
 		});
