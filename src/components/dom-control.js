@@ -26,6 +26,10 @@ export default (function DomControl() {
 			clearProjects();
 			createProjectElements(data);
 		});
+		PubSub.subscribe('todosChanged', (msg, projectName) => {
+			clearMainElement();
+			renderProject(projectName);
+		});
 		loadImages();
 		addListeners();
 		Project.loadProjects();
@@ -52,15 +56,6 @@ export default (function DomControl() {
 			img.classList.add(image.className);
 			image.location.appendChild(img);
 		});
-	}
-
-	PubSub.subscribe('todosChanged', (msg, data) => {
-		clearTodos();
-		createTodoElements(data);
-	});
-
-	function clearTodos() {
-		todosElement.innerHTML = '';
 	}
 
 	function createTodoElements(data) {
@@ -116,11 +111,11 @@ export default (function DomControl() {
 		);
 		mainElement.appendChild(projectHeaderElement);
 
-		renderTodoForm();
+		renderTodoForm(project);
 		renderTodos(project);
 	}
 
-	function renderTodoForm() {
+	function renderTodoForm(project) {
 		const todoFormElement = createDomElement(
 			'form',
 			'todo-form todo-container',
@@ -132,6 +127,11 @@ export default (function DomControl() {
 			class="todo-submit-btn"
 		/>`
 		);
+		todoFormElement.addEventListener('submit', (e) => {
+			e.preventDefault();
+			const formData = new FormData(e.target);
+			Project.createTodo(formData, project.getName());
+		});
 		mainElement.appendChild(todoFormElement);
 	}
 

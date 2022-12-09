@@ -176,6 +176,12 @@ nav {
 	padding: 15px;
 }
 
+.todos {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
 .todo-container {
 	display: flex;
 	justify-content: center;

@@ -1,7 +1,10 @@
 import PubSub from 'pubsub-js';
 import { checkNameAvailability, checkStringLength } from '../utils/utilities';
+import todos from './todos';
 
 export default (function Project() {
+	// DEFAULTS
+
 	let projects = [
 		{
 			name: 'test-project',
@@ -28,6 +31,14 @@ export default (function Project() {
 		},
 	};
 
+	const defaultTodo = {
+		getName() {
+			return this.name;
+		},
+	};
+
+	// PROJECTS
+
 	function loadProjects() {
 		PubSub.publish('projectsChanged', projects);
 		PubSub.subscribe('deleteProjectClicked', (msg, e) => {
@@ -40,12 +51,12 @@ export default (function Project() {
 	}
 
 	function createProject(data) {
-		if (!validateProjectName(data.get('projectName'))) {
+		if (!validateProjectName(data.get('project-name'))) {
 			return false;
 		}
 
 		const state = {
-			name: data.get('projectName'),
+			name: data.get('project-name'),
 			todos: [],
 		};
 
@@ -74,5 +85,39 @@ export default (function Project() {
 		return project;
 	}
 
-	return { createProject, loadProjects, getProject };
+	// TODOS
+
+	function createTodo(data, projectName) {
+		const project = getProject(projectName);
+		const todosArray = project.getTodos();
+
+		if (!validateTodoName(data.get('todo-name'), todosArray)) {
+			return false;
+		}
+
+		const state = {
+			name: data.get('todo-name'),
+		};
+
+		todosArray.push(Object.assign({}, defaultTodo, state));
+		PubSub.publish('todosChanged', projectName);
+
+		return true;
+	}
+
+	function validateTodoName(name, todosArray) {
+		console.log(todosArray);
+		if (!checkStringLength(name, 1, 50)) {
+			alert('Todo name must be between 1 to 50 characters');
+			return false;
+		}
+
+		if (!checkNameAvailability(name, todosArray, 'name')) {
+			alert(`Name "${name}" already taken`);
+			return false;
+		}
+		return true;
+	}
+
+	return { createProject, loadProjects, getProject, createTodo };
 })();
