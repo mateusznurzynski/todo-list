@@ -31,7 +31,7 @@ export default (function DomControl() {
 	function initPage() {
 		PubSub.subscribe('projectsChanged', (msg, data) => {
 			clearProjects();
-			createProjectElements(Project.getInitialProject(), true);
+			createProjectElements(Project.getProject(null, true), true);
 			createProjectElements(data);
 			refreshMainElement(data);
 		});
@@ -113,7 +113,7 @@ export default (function DomControl() {
 	function renderProject(projectName, initial) {
 		console.log('rendered: ', projectName);
 		const project = initial
-			? Project.getInitialProject(projectName)
+			? Project.getProject(projectName, true)
 			: Project.getProject(projectName);
 
 		const projectHeaderElement = createDomElement(

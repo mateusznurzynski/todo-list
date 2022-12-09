@@ -84,21 +84,12 @@ export default (function Project() {
 		return true;
 	}
 
-	function getProject(projectName) {
+	function getProject(projectName, initial) {
+		const requestedProjects = initial ? INITIAL_PROJECTS : projects;
 		if (!projectName) {
-			return projects;
+			return requestedProjects;
 		}
-		const project = projects.find(
-			(project) => project.getName() === projectName
-		);
-		return project;
-	}
-
-	function getInitialProject(projectName) {
-		if (!projectName) {
-			return INITIAL_PROJECTS;
-		}
-		const project = INITIAL_PROJECTS.find(
+		const project = requestedProjects.find(
 			(project) => project.getName() === projectName
 		);
 		return project;
@@ -106,7 +97,7 @@ export default (function Project() {
 
 	// TODOS
 
-	function createTodo(data, projectName) {
+	function createTodo(data, projectName, initial) {
 		const project = getProject(projectName);
 		const todosArray = project.getTodos();
 
@@ -142,7 +133,6 @@ export default (function Project() {
 		createProject,
 		loadProjects,
 		getProject,
-		getInitialProject,
 		createTodo,
 	};
 })();
