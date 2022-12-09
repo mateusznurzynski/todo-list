@@ -68,17 +68,6 @@ export default (function DomControl() {
 		});
 	}
 
-	function createTodoElements(data) {
-		data.forEach((todo) => {
-			const todoElement = createDomElement(
-				'div',
-				'todo',
-				`Name: ${todo.name}`
-			);
-			todosElement.appendChild(todoElement);
-		});
-	}
-
 	function clearProjects() {
 		projectsElement.innerHTML = '';
 	}
