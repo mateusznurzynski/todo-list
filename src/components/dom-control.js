@@ -129,7 +129,18 @@ export default (function DomControl() {
 
 	function renderTodos(project) {
 		const todos = project.getTodos();
-		console.log(todos);
+		const todosElement = createDomElement('section', 'todos');
+		const todoDefaultElement = createDomElement(
+			'article',
+			'todo-container'
+		);
+
+		todos.forEach((todo) => {
+			const todoElement = todoDefaultElement.cloneNode(true);
+			todoElement.innerText = `Name: ${todo.name}`;
+			todosElement.appendChild(todoElement);
+		});
+		mainElement.appendChild(todosElement);
 	}
 
 	function clearMainElement() {

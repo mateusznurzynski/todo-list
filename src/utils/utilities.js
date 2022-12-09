@@ -1,7 +1,12 @@
 function createDomElement(type, classesString, innerHTML) {
-	const element = document.createElement(type);
-	element.className = classesString;
-	element.innerHTML = innerHTML;
+	const element = document.createElement(type || 'div');
+	if (classesString) {
+		element.className = classesString;
+	}
+	if (innerHTML) {
+		element.innerHTML = innerHTML;
+	}
+
 	return element;
 }
 
