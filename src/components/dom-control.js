@@ -16,8 +16,8 @@ export default (function DomControl() {
 	const mainElement = document.querySelector('.main');
 
 	const activeProject = {
-		type: 'normal',
-		name: 'test-project',
+		type: 'initial',
+		name: 'Unsorted todos',
 	};
 	const images = [
 		{
@@ -37,13 +37,18 @@ export default (function DomControl() {
 		});
 		PubSub.subscribe('todosChanged', (msg, projectName) => {
 			clearMainElement();
-			const initial = activeProject.type === 'initial' ? true : false;
-			renderProject(projectName, initial);
+			renderProject(
+				projectName,
+				activeProject.type === 'initial' ? true : false
+			);
 		});
 		loadImages();
 		addListeners();
 		Project.loadProjects();
-		renderProject(activeProject.name);
+		renderProject(
+			activeProject.name,
+			activeProject.type === 'initial' ? true : false
+		);
 	}
 
 	function addListeners() {
