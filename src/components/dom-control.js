@@ -1,5 +1,4 @@
 import PubSub from 'pubsub-js';
-import Todo from './todos';
 import Project from './projects';
 import { createDomElement } from '../utils/utilities';
 import addProjectIcon from '../icons/add-project.svg';

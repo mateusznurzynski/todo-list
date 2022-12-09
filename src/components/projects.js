@@ -1,6 +1,5 @@
 import PubSub from 'pubsub-js';
 import { checkNameAvailability, checkStringLength } from '../utils/utilities';
-import todos from './todos';
 
 export default (function Project() {
 	// DEFAULTS
