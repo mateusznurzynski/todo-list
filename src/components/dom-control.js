@@ -6,7 +6,10 @@ import { Modal } from 'bootstrap';
 
 export default (function DomControl() {
 	const projectFormElement = document.querySelector('.project-form');
+
 	const projectsElement = document.querySelector('.user-projects');
+
+	const initialProjectsElement = document.querySelector('.initial-projects');
 
 	const projectModalElement = document.querySelector('#addProjectModal');
 
@@ -28,6 +31,7 @@ export default (function DomControl() {
 	function initPage() {
 		PubSub.subscribe('projectsChanged', (msg, data) => {
 			clearProjects();
+			createProjectElements(Project.getInitialProject(), true);
 			createProjectElements(data);
 			refreshMainElement(data);
 		});
@@ -79,7 +83,7 @@ export default (function DomControl() {
 		projectsElement.innerHTML = '';
 	}
 
-	function createProjectElements(data) {
+	function createProjectElements(data, initial) {
 		const deleteProjectButton = createDomElement(
 			'button',
 			'btn-delete-project',
@@ -92,25 +96,36 @@ export default (function DomControl() {
 				'project',
 				`<div title='${project.name}' class='project-name'>${project.name}</div>`
 			);
-			const button = deleteProjectButton.cloneNode(true);
-			projectElement.appendChild(button);
-			button.addEventListener('click', (e) => {
-				e.stopPropagation();
-				PubSub.publish('deleteProjectClicked', e);
-			});
+			if (!initial) {
+				const button = deleteProjectButton.cloneNode(true);
+				projectElement.appendChild(button);
+				button.addEventListener('click', (e) => {
+					e.stopPropagation();
+					PubSub.publish('deleteProjectClicked', e);
+				});
+			} else {
+				projectElement.toggleAttribute('data-initial', true);
+			}
+
 			projectElement.addEventListener('click', (e) => {
 				clearMainElement();
-				renderProject(project.name);
+				renderProject(project.name, initial);
 				activeProject.name = project.name;
-				// will add activeProject.type later
+				activeProject.type = initial ? 'initial' : 'normal';
 			});
-			projectsElement.appendChild(projectElement);
+			if (initial) {
+				initialProjectsElement.appendChild(projectElement);
+			} else {
+				projectsElement.appendChild(projectElement);
+			}
 		});
 	}
 
-	function renderProject(projectName) {
+	function renderProject(projectName, initial) {
 		console.log('rendered: ', projectName);
-		const project = Project.getProject(projectName);
+		const project = initial
+			? Project.getInitialProject(projectName)
+			: Project.getProject(projectName);
 
 		const projectHeaderElement = createDomElement(
 			'h2',
@@ -168,6 +183,7 @@ export default (function DomControl() {
 			return false;
 		}
 		clearMainElement();
+
 		const project = projects.find(
 			(project) => project.getName() === activeProject.name
 		);

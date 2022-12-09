@@ -36,6 +36,13 @@ export default (function Project() {
 		},
 	};
 
+	const INITIAL_PROJECTS = [
+		Object.assign({}, defaultProject, {
+			name: 'Unsorted todos',
+			todos: [],
+		}),
+	];
+
 	// PROJECTS
 
 	function loadProjects() {
@@ -78,7 +85,20 @@ export default (function Project() {
 	}
 
 	function getProject(projectName) {
+		if (!projectName) {
+			return projects;
+		}
 		const project = projects.find(
+			(project) => project.getName() === projectName
+		);
+		return project;
+	}
+
+	function getInitialProject(projectName) {
+		if (!projectName) {
+			return INITIAL_PROJECTS;
+		}
+		const project = INITIAL_PROJECTS.find(
 			(project) => project.getName() === projectName
 		);
 		return project;
@@ -118,5 +138,11 @@ export default (function Project() {
 		return true;
 	}
 
-	return { createProject, loadProjects, getProject, createTodo };
+	return {
+		createProject,
+		loadProjects,
+		getProject,
+		getInitialProject,
+		createTodo,
+	};
 })();
