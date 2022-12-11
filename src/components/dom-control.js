@@ -5,6 +5,11 @@ import addProjectIcon from '../icons/add-project.svg';
 import { Modal } from 'bootstrap';
 
 export default (function DomControl() {
+	const DEFAULT_PROJECT = {
+		type: 'initial',
+		name: 'Unsorted todos',
+	};
+
 	const projectFormElement = document.querySelector('.project-form');
 
 	const projectsElement = document.querySelector('.user-projects');
@@ -16,8 +21,8 @@ export default (function DomControl() {
 	const mainElement = document.querySelector('.main');
 
 	const activeProject = {
-		type: 'initial',
-		name: 'Unsorted todos',
+		type: DEFAULT_PROJECT.type,
+		name: DEFAULT_PROJECT.name,
 	};
 	const images = [
 		{
@@ -76,6 +81,7 @@ export default (function DomControl() {
 
 	function clearProjects() {
 		projectsElement.innerHTML = '';
+		initialProjectsElement.innerHTML = '';
 	}
 
 	function createProjectElements(data, initial) {
@@ -186,7 +192,10 @@ export default (function DomControl() {
 		if (project) {
 			renderProject(project.getName());
 		} else {
-			console.log('load initial project');
+			renderProject(
+				DEFAULT_PROJECT.name,
+				DEFAULT_PROJECT.type === 'initial' ? true : false
+			);
 		}
 	}
 
