@@ -85,12 +85,6 @@ export default (function DomControl() {
 	}
 
 	function createProjectElements(data, initial) {
-		const deleteProjectButton = createDomElement(
-			'button',
-			'btn-delete-project',
-			'X'
-		);
-
 		data.forEach((project) => {
 			const projectElement = createDomElement(
 				'div',
@@ -98,9 +92,13 @@ export default (function DomControl() {
 				`<div title='${project.name}' class='project-name'>${project.name}</div>`
 			);
 			if (!initial) {
-				const button = deleteProjectButton.cloneNode(true);
-				projectElement.appendChild(button);
-				button.addEventListener('click', (e) => {
+				const deleteProjectButton = createDomElement(
+					'button',
+					'btn-delete-project',
+					'X'
+				);
+				projectElement.appendChild(deleteProjectButton);
+				deleteProjectButton.addEventListener('click', (e) => {
 					e.stopPropagation();
 					PubSub.publish('deleteProjectClicked', e);
 				});
@@ -136,7 +134,7 @@ export default (function DomControl() {
 		mainElement.appendChild(projectHeaderElement);
 
 		renderTodoForm(project, initial);
-		renderTodos(project);
+		renderTodos(project, initial);
 	}
 
 	function renderTodoForm(project, initial) {
@@ -159,7 +157,7 @@ export default (function DomControl() {
 		mainElement.appendChild(todoFormElement);
 	}
 
-	function renderTodos(project) {
+	function renderTodos(project, initial) {
 		const todos = project.getTodos();
 		const todosElement = createDomElement('section', 'todos');
 		const todoDefaultElement = createDomElement(
@@ -169,7 +167,21 @@ export default (function DomControl() {
 
 		todos.forEach((todo) => {
 			const todoElement = todoDefaultElement.cloneNode(true);
+			const todoDeleteButton = createDomElement(
+				'button',
+				'delete-todo-btn',
+				'X'
+			);
+			todoDeleteButton.addEventListener('click', (e) => {
+				Project.removeTodo(
+					e,
+					project.getName(),
+					todo.getName(),
+					initial
+				);
+			});
 			todoElement.innerText = `Name: ${todo.name}`;
+			todoElement.appendChild(todoDeleteButton);
 			todosElement.appendChild(todoElement);
 		});
 		mainElement.appendChild(todosElement);

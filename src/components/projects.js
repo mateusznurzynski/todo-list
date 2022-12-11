@@ -10,6 +10,9 @@ export default (function Project() {
 			todos: [
 				{
 					name: 'test-todo',
+					getName() {
+						return this.name;
+					},
 				},
 			],
 			getName() {
@@ -17,6 +20,12 @@ export default (function Project() {
 			},
 			getTodos() {
 				return this.todos;
+			},
+			removeTodo(todoName) {
+				this.todos = this.todos.filter((todo) => {
+					return todo.getName() !== todoName;
+				});
+				PubSub.publish('todosChanged', this.getName());
 			},
 		},
 	];
@@ -27,6 +36,12 @@ export default (function Project() {
 		},
 		getTodos() {
 			return this.todos;
+		},
+		removeTodo(todoName) {
+			this.todos = this.todos.filter((todo) => {
+				return todo.getName() !== todoName;
+			});
+			PubSub.publish('todosChanged', this.getName());
 		},
 	};
 
@@ -129,10 +144,16 @@ export default (function Project() {
 		return true;
 	}
 
+	function removeTodo(event, projectName, todoName, initial) {
+		const project = getProject(projectName, initial);
+		project.removeTodo(todoName);
+	}
+
 	return {
 		createProject,
 		loadProjects,
 		getProject,
 		createTodo,
+		removeTodo,
 	};
 })();
