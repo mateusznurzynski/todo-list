@@ -1,6 +1,6 @@
 import PubSub from 'pubsub-js';
 import { checkNameAvailability, checkStringLength } from '../utils/utilities';
-import { format } from 'date-fns';
+import { format, parse, parseISO } from 'date-fns';
 
 export default (function Project() {
 	// DEFAULTS
@@ -121,9 +121,16 @@ export default (function Project() {
 			return false;
 		}
 
+		const parsedDate = data.get('todo-date')
+			? parseISO(data.get('todo-date'))
+			: undefined;
+
 		const state = {
 			name: data.get('todo-name'),
 			creationDate: format(new Date(), 'dd-MM-yyyy'),
+			dueDate: parsedDate
+				? format(parsedDate, 'dd-MM-yyyy')
+				: 'Not specified',
 		};
 
 		todosArray.push(Object.assign({}, defaultTodo, state));
