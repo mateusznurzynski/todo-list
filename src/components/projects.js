@@ -3,33 +3,11 @@ import { checkNameAvailability, checkStringLength } from '../utils/utilities';
 import { format, parse, parseISO } from 'date-fns';
 
 export default (function Project() {
+	// * * *
 	// DEFAULTS
+	// * * *
 
-	let projects = [
-		{
-			name: 'test-project',
-			todos: [
-				{
-					name: 'test-todo',
-					getName() {
-						return this.name;
-					},
-				},
-			],
-			getName() {
-				return this.name;
-			},
-			getTodos() {
-				return this.todos;
-			},
-			removeTodo(todoName) {
-				this.todos = this.todos.filter((todo) => {
-					return todo.getName() !== todoName;
-				});
-				PubSub.publish('todosChanged', this.getName());
-			},
-		},
-	];
+	let projects = [];
 
 	const defaultProject = {
 		getName() {
@@ -59,7 +37,17 @@ export default (function Project() {
 		}),
 	];
 
+	// placeholder project
+	const placeholderProjectData = new FormData();
+	placeholderProjectData.append('project-name', 'test-project');
+	const placeholderTodoData = new FormData();
+	placeholderTodoData.append('todo-name', 'test-todo');
+	createProject(placeholderProjectData);
+	createTodo(placeholderTodoData, 'test-project', false);
+
+	// * * *
 	// PROJECTS
+	// * * *
 
 	function loadProjects() {
 		PubSub.publish('projectsChanged', projects);
@@ -111,7 +99,9 @@ export default (function Project() {
 		return project;
 	}
 
+	// * * *
 	// TODOS
+	// * * *
 
 	function createTodo(data, projectName, initial) {
 		const project = getProject(projectName, initial);
