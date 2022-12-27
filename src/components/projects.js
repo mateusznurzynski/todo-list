@@ -1,5 +1,6 @@
 import PubSub from 'pubsub-js';
 import { checkNameAvailability, checkStringLength } from '../utils/utilities';
+import { format } from 'date-fns';
 
 export default (function Project() {
 	// DEFAULTS
@@ -122,6 +123,7 @@ export default (function Project() {
 
 		const state = {
 			name: data.get('todo-name'),
+			creationDate: format(new Date(), 'dd-MM-yyyy'),
 		};
 
 		todosArray.push(Object.assign({}, defaultTodo, state));
