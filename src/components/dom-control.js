@@ -181,7 +181,9 @@ export default (function DomControl() {
 					initial
 				);
 			});
-			todoElement.innerText = `Name: ${todo.name}`;
+			todoElement.innerText = `Name: ${todo.name} Due date: ${
+				todo.dueDate ? todo.dueDate : 'Not specified'
+			}`;
 			todoElement.appendChild(todoDeleteButton);
 			todosElement.appendChild(todoElement);
 		});

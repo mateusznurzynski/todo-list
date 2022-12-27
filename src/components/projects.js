@@ -123,14 +123,12 @@ export default (function Project() {
 
 		const parsedDate = data.get('todo-date')
 			? parseISO(data.get('todo-date'))
-			: undefined;
+			: null;
 
 		const state = {
 			name: data.get('todo-name'),
 			creationDate: format(new Date(), 'dd-MM-yyyy'),
-			dueDate: parsedDate
-				? format(parsedDate, 'dd-MM-yyyy')
-				: 'Not specified',
+			dueDate: parsedDate ? format(parsedDate, 'dd-MM-yyyy') : null,
 		};
 
 		todosArray.push(Object.assign({}, defaultTodo, state));
