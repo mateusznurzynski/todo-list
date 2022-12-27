@@ -141,7 +141,8 @@ export default (function DomControl() {
 		const todoFormElement = createDomElement(
 			'form',
 			'todo-form todo-container',
-			`<input type="text" name="todo-name" id="todo-name" />
+			`Name:<input type="text" name="todo-name" id="todo-name" />
+			Due date:<input type="date" name="todo-date" id="todo-date" />
 		<input
 			type="submit"
 			name="todo-submit"

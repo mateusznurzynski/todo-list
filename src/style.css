@@ -184,11 +184,19 @@ nav {
 
 .todo-container {
 	display: flex;
-	justify-content: center;
+	justify-content: start;
 	align-items: center;
 	width: 100%;
 	height: 60px;
 	background-color: gray;
+	gap: 5px;
+	padding: 0px 10px;
+	white-space: nowrap;
+}
+
+.todo-submit-btn {
+	margin-left: auto;
+	padding: 3px;
 }
 
 .footer {
