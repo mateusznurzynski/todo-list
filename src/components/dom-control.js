@@ -143,6 +143,12 @@ export default (function DomControl() {
 			'todo-form todo-container',
 			`Name:<input type="text" name="todo-name" id="todo-name" />
 			Due date:<input type="date" name="todo-date" id="todo-date" />
+			Priority: <select name="todo-priority">
+			<option value="0">Low</option>
+			<option selected value="1">Normal</option>
+			<option value="2">High</option>
+			<option value="3">Very High</option>
+			</select>
 		<input
 			type="submit"
 			name="todo-submit"
@@ -181,9 +187,10 @@ export default (function DomControl() {
 					initial
 				);
 			});
-			todoElement.innerText = `Name: ${todo.name} Due date: ${
+			todoElement.innerText = `Name: ${todo.getName()} Due date: ${
 				todo.dueDate ? todo.dueDate : 'Not specified'
-			}`;
+			} Priority: ${todo.getPriority(true)}
+			`;
 			todoElement.appendChild(todoDeleteButton);
 			todosElement.appendChild(todoElement);
 		});

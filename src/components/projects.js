@@ -28,6 +28,24 @@ export default (function Project() {
 		getName() {
 			return this.name;
 		},
+		getPriority(asString) {
+			if (asString) {
+				switch (this.priority) {
+					case 0:
+						return 'Low';
+					case 1:
+						return 'Normal';
+					case 2:
+						return 'High';
+					case 3:
+						return 'Very High';
+					default:
+						return 'Normal';
+				}
+			} else {
+				return this.priority;
+			}
+		},
 	};
 
 	const INITIAL_PROJECTS = [
@@ -119,6 +137,7 @@ export default (function Project() {
 			name: data.get('todo-name'),
 			creationDate: format(new Date(), 'dd-MM-yyyy'),
 			dueDate: parsedDate ? format(parsedDate, 'dd-MM-yyyy') : null,
+			priority: +data.get('todo-priority') || 1,
 		};
 
 		todosArray.push(Object.assign({}, defaultTodo, state));
