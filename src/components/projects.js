@@ -99,6 +99,9 @@ export default (function Project() {
 
 	function editProject(projectName, data) {
 		const newName = data.get('project-edit-name');
+		if (projectName === newName) {
+			return false;
+		}
 		if (!validateProjectName(newName)) {
 			return false;
 		} else {

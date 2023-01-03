@@ -261,8 +261,8 @@ export default (function DomControl() {
 			const edited = Project.editProject(projectName, formData);
 			if (edited) {
 				activeProject.name = formData.get('project-edit-name');
-				PubSub.publish('projectsChanged', Project.getProject());
 			}
+			PubSub.publish('projectsChanged', Project.getProject());
 		});
 		console.log(editForm);
 	}
