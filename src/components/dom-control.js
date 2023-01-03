@@ -133,13 +133,23 @@ export default (function DomControl() {
 			`${project.getName()}:`
 		);
 
-		const editIcon = new Image();
-		editIcon.src = editProjectIcon;
+		if (!initial) {
+			const editIcon = new Image();
+			editIcon.src = editProjectIcon;
 
-		const projectEditElement = createDomElement('div', 'project-edit-btn');
+			const projectEditElement = createDomElement(
+				'div',
+				'project-edit-btn'
+			);
 
-		projectEditElement.appendChild(editIcon);
-		projectHeaderElement.appendChild(projectEditElement);
+			projectEditElement.addEventListener('click', (e) => {
+				console.log('edit');
+			});
+
+			projectEditElement.appendChild(editIcon);
+			projectHeaderElement.appendChild(projectEditElement);
+		}
+
 		mainElement.appendChild(projectHeaderElement);
 
 		renderTodoForm(project, initial);
