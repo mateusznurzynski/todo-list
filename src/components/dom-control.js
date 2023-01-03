@@ -244,6 +244,7 @@ export default (function DomControl() {
 		const editForm = createDomElement('form', 'project-edit-form');
 		editForm.addEventListener('submit', (e) => {
 			e.preventDefault();
+			editInput.blur();
 		});
 
 		const editInput = createDomElement('input', 'project-edit-name');
