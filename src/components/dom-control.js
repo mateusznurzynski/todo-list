@@ -2,8 +2,8 @@ import PubSub from 'pubsub-js';
 import Project from './projects';
 import { createDomElement } from '../utils/utilities';
 import { Modal } from 'bootstrap';
-import addProjectIcon from '../icons/add-project.svg';
-import editProjectIcon from '../icons/edit.svg';
+import iconAddProject from '../icons/add-project.svg';
+import iconEditProject from '../icons/edit.svg';
 
 export default (function DomControl() {
 	const DEFAULT_PROJECT = {
@@ -27,7 +27,7 @@ export default (function DomControl() {
 	};
 	const images = [
 		{
-			src: addProjectIcon,
+			src: iconAddProject,
 			location: document.querySelector('.add-project'),
 			alt: 'Add new project',
 			className: 'add-project-img',
@@ -130,12 +130,12 @@ export default (function DomControl() {
 		const projectHeaderElement = createDomElement(
 			'h2',
 			'main-project-header',
-			`${project.getName()}:`
+			`<p class="main-project-name">${project.getName()}:</p>`
 		);
 
 		if (!initial) {
 			const editIcon = new Image();
-			editIcon.src = editProjectIcon;
+			editIcon.src = iconEditProject;
 
 			const projectEditElement = createDomElement(
 				'div',
@@ -143,7 +143,7 @@ export default (function DomControl() {
 			);
 
 			projectEditElement.addEventListener('click', (e) => {
-				console.log('edit');
+				initProjectEdit(projectName, projectHeaderElement);
 			});
 
 			projectEditElement.appendChild(editIcon);
@@ -238,6 +238,33 @@ export default (function DomControl() {
 				DEFAULT_PROJECT.type === 'initial' ? true : false
 			);
 		}
+	}
+
+	function initProjectEdit(projectName, headerElement) {
+		const editForm = createDomElement('form', 'project-edit-form');
+		editForm.addEventListener('submit', (e) => {
+			e.preventDefault();
+		});
+
+		const editInput = createDomElement('input', 'project-edit-name');
+		editInput.setAttribute('name', 'project-edit-name');
+		editInput.value = projectName;
+
+		editForm.appendChild(editInput);
+
+		headerElement.innerHTML = '';
+		headerElement.appendChild(editForm);
+		editInput.focus();
+
+		editInput.addEventListener('blur', (e) => {
+			const formData = new FormData(editForm);
+			const edited = Project.editProject(projectName, formData);
+			if (edited) {
+				activeProject.name = formData.get('project-edit-name');
+				PubSub.publish('projectsChanged', Project.getProject());
+			}
+		});
+		console.log(editForm);
 	}
 
 	return {

@@ -177,6 +177,13 @@ nav {
 	position: relative;
 }
 
+.main-project-name {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+}
+
 .project-edit-btn {
 	position: absolute;
 	right: 0;

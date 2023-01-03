@@ -13,6 +13,9 @@ export default (function Project() {
 		getName() {
 			return this.name;
 		},
+		editName(newName) {
+			this.name = newName;
+		},
 		getTodos() {
 			return this.todos;
 		},
@@ -94,6 +97,16 @@ export default (function Project() {
 		return true;
 	}
 
+	function editProject(projectName, data) {
+		const newName = data.get('project-edit-name');
+		if (!validateProjectName(newName)) {
+			return false;
+		} else {
+			getProject(projectName).editName(newName);
+			return true;
+		}
+	}
+
 	function validateProjectName(name) {
 		if (!checkStringLength(name, 1, 50)) {
 			alert('Project name must be between 1 to 50 characters');
@@ -167,6 +180,7 @@ export default (function Project() {
 
 	return {
 		createProject,
+		editProject,
 		loadProjects,
 		getProject,
 		createTodo,
