@@ -1,8 +1,9 @@
 import PubSub from 'pubsub-js';
 import Project from './projects';
 import { createDomElement } from '../utils/utilities';
-import addProjectIcon from '../icons/add-project.svg';
 import { Modal } from 'bootstrap';
+import addProjectIcon from '../icons/add-project.svg';
+import editProjectIcon from '../icons/edit.svg';
 
 export default (function DomControl() {
 	const DEFAULT_PROJECT = {
@@ -131,6 +132,14 @@ export default (function DomControl() {
 			'main-project-header',
 			`${project.getName()}:`
 		);
+
+		const editIcon = new Image();
+		editIcon.src = editProjectIcon;
+
+		const projectEditElement = createDomElement('div', 'project-edit-btn');
+
+		projectEditElement.appendChild(editIcon);
+		projectHeaderElement.appendChild(projectEditElement);
 		mainElement.appendChild(projectHeaderElement);
 
 		renderTodoForm(project, initial);
