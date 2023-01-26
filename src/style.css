@@ -213,6 +213,18 @@ nav {
 	align-items: flex-start;
 }
 
+.todo-basic-info {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.collapse-todo-btn {
+	margin-left: auto;
+	padding: 3px;
+}
+
 .todo-details-container {
 	background-color: white;
 	width: 100%;

@@ -197,10 +197,10 @@ export default (function DomControl() {
 			const todoBasicInfoElement = createDomElement(
 				'div',
 				'todo-basic-info',
-				`Name: ${todo.getName()} Due date: ${
-					todo.dueDate ? todo.dueDate : 'Not specified'
-				} Priority: ${todo.getPriority(true)}
-			`
+				`<div>Name: ${todo.getName()} Due date: ${todo.getDueDate(
+					true
+				)} Priority: ${todo.getPriority(true)}
+				</div>`
 			);
 
 			const todoCollapseButton = createDomElement(
@@ -217,7 +217,11 @@ export default (function DomControl() {
 			const todoCollapseElement = createDomElement(
 				'div',
 				'collapse todo-details-container',
-				'<div class="todo-details">todo details</div>'
+				`<div class="todo-details">Name: ${todo.getName()} Priority: ${todo.getPriority(
+					true
+				)} Due date: ${todo.getDueDate(
+					true
+				)} Creation date: ${todo.getCreationDate()}</div>`
 			);
 			todoCollapseElement.id = `collapseTodo${todoId}`;
 

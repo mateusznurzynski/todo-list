@@ -49,6 +49,16 @@ export default (function Project() {
 				return this.priority;
 			}
 		},
+		getDueDate(checkIfExists) {
+			if (checkIfExists) {
+				return this.dueDate ? this.dueDate : 'Not Specified';
+			} else {
+				return this.dueDate;
+			}
+		},
+		getCreationDate() {
+			return this.creationDate;
+		},
 	};
 
 	const INITIAL_PROJECTS = [
