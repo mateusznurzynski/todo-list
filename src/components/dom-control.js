@@ -188,11 +188,39 @@ export default (function DomControl() {
 		const todosElement = createDomElement('section', 'todos');
 		const todoDefaultElement = createDomElement(
 			'article',
-			'todo-container'
+			'todo-container todo-element'
 		);
 
 		todos.forEach((todo) => {
+			const todoId = todos.indexOf(todo);
 			const todoElement = todoDefaultElement.cloneNode(true);
+			const todoBasicInfoElement = createDomElement(
+				'div',
+				'todo-basic-info',
+				`Name: ${todo.getName()} Due date: ${
+					todo.dueDate ? todo.dueDate : 'Not specified'
+				} Priority: ${todo.getPriority(true)}
+			`
+			);
+
+			const todoCollapseButton = createDomElement(
+				'button',
+				'collapse-todo-btn',
+				'V'
+			);
+			todoCollapseButton.setAttribute('data-bs-toggle', 'collapse');
+			todoCollapseButton.setAttribute(
+				'data-bs-target',
+				`#collapseTodo${todoId}`
+			);
+
+			const todoCollapseElement = createDomElement(
+				'div',
+				'collapse todo-details-container',
+				'<div class="todo-details">todo details</div>'
+			);
+			todoCollapseElement.id = `collapseTodo${todoId}`;
+
 			const todoDeleteButton = createDomElement(
 				'button',
 				'delete-todo-btn',
@@ -206,11 +234,12 @@ export default (function DomControl() {
 					initial
 				);
 			});
-			todoElement.innerText = `Name: ${todo.getName()} Due date: ${
-				todo.dueDate ? todo.dueDate : 'Not specified'
-			} Priority: ${todo.getPriority(true)}
-			`;
-			todoElement.appendChild(todoDeleteButton);
+
+			todoBasicInfoElement.appendChild(todoCollapseButton);
+
+			todoElement.appendChild(todoBasicInfoElement);
+			todoElement.appendChild(todoCollapseElement);
+
 			todosElement.appendChild(todoElement);
 		});
 		mainElement.appendChild(todosElement);
