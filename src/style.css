@@ -223,6 +223,13 @@ nav {
 .collapse-todo-btn {
 	margin-left: auto;
 	padding: 3px;
+	cursor: pointer;
+	transition: all 0.2s;
+}
+
+.collapse-todo-btn:not(.collapsed) {
+	transform: rotate(180deg);
+	transition: all 0.2s;
 }
 
 .todo-details-container {

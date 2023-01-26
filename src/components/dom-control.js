@@ -4,6 +4,7 @@ import { createDomElement } from '../utils/utilities';
 import { Modal } from 'bootstrap';
 import iconAddProject from '../icons/add-project.svg';
 import iconEditProject from '../icons/edit.svg';
+import iconExpand from '../icons/expand.svg';
 
 export default (function DomControl() {
 	const DEFAULT_PROJECT = {
@@ -204,10 +205,16 @@ export default (function DomControl() {
 			);
 
 			const todoCollapseButton = createDomElement(
-				'button',
-				'collapse-todo-btn',
-				'V'
+				'div',
+				'collapse-todo-btn collapsed',
+				''
 			);
+			const expandInfoIcon = new Image();
+			expandInfoIcon.src = iconExpand;
+			expandInfoIcon.alt = 'Expand Info';
+			expandInfoIcon.title = 'Expand Info';
+			todoCollapseButton.appendChild(expandInfoIcon);
+
 			todoCollapseButton.setAttribute('data-bs-toggle', 'collapse');
 			todoCollapseButton.setAttribute(
 				'data-bs-target',
