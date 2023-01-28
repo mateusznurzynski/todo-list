@@ -16,8 +16,12 @@ export default (function Project() {
 		editName(newName) {
 			this.name = newName;
 		},
-		getTodos() {
-			return this.todos;
+		getTodos(todoName) {
+			if (todoName == null) {
+				return this.todos;
+			}
+			const todo = this.todos.find((todo) => todo.getName() === todoName);
+			return todo;
 		},
 		removeTodo(todoName) {
 			this.todos = this.todos.filter((todo) => {
@@ -58,6 +62,9 @@ export default (function Project() {
 		},
 		getCreationDate() {
 			return this.creationDate;
+		},
+		toggleCompleted() {
+			this.completed = !this.completed;
 		},
 	};
 
@@ -164,6 +171,7 @@ export default (function Project() {
 			creationDate: format(new Date(), 'dd-MM-yyyy'),
 			dueDate: parsedDate ? format(parsedDate, 'dd-MM-yyyy') : null,
 			priority: +data.get('todo-priority') || 1,
+			completed: false,
 		};
 
 		todosArray.push(Object.assign({}, defaultTodo, state));
@@ -191,6 +199,13 @@ export default (function Project() {
 		project.removeTodo(todoName);
 	}
 
+	function completeTodo(projectName, todoName, initial) {
+		const project = getProject(projectName, initial);
+		const todo = project.getTodos(todoName);
+		todo.toggleCompleted();
+		console.log(todo);
+	}
+
 	return {
 		createProject,
 		editProject,
@@ -198,5 +213,6 @@ export default (function Project() {
 		getProject,
 		createTodo,
 		removeTodo,
+		completeTodo,
 	};
 })();

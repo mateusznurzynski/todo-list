@@ -229,15 +229,41 @@ export default (function DomControl() {
 				)}</div><div class="todo-detail"> Due date: ${todo.getDueDate(
 					true
 				)}</div></div> <div class="details-wrapper uneditable">Creation date: ${todo.getCreationDate()}</div></div>
-				<div class="todo-details-controls"><div class="todo-edit-btn">Edit</div> <div class="todo-complete-btn">It's Done!</div></div>`
+				`
 			);
 			todoCollapseElement.id = `collapseTodo${todoId}`;
 
 			const todoDeleteButton = createDomElement(
 				'button',
-				'delete-todo-btn',
+				'todo-delete-btn',
 				'X'
 			);
+
+			const todoControlsElement = createDomElement(
+				'div',
+				'todo-details-controls'
+			);
+			const todoCompleteButton = createDomElement(
+				'div',
+				'todo-complete-btn',
+				"It's done!"
+			);
+			todoCompleteButton.addEventListener('click', (e) => {
+				Project.completeTodo(
+					project.getName(),
+					todo.getName(),
+					initial
+				);
+			});
+			const todoEditButton = createDomElement(
+				'div',
+				'todo-edit-btn',
+				'Edit'
+			);
+			todoControlsElement.appendChild(todoEditButton);
+			todoControlsElement.appendChild(todoCompleteButton);
+			todoCollapseElement.appendChild(todoControlsElement);
+
 			todoDeleteButton.addEventListener('click', (e) => {
 				Project.removeTodo(
 					e,
