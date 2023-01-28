@@ -168,7 +168,7 @@ export default (function Project() {
 
 		const state = {
 			name: data.get('todo-name'),
-			creationDate: format(new Date(), 'dd-MM-yyyy'),
+			creationDate: format(new Date(), 'dd-MM-yyyy, HH:mm'),
 			dueDate: parsedDate ? format(parsedDate, 'dd-MM-yyyy') : null,
 			priority: +data.get('todo-priority') || 1,
 			completed: false,
@@ -203,7 +203,6 @@ export default (function Project() {
 		const project = getProject(projectName, initial);
 		const todo = project.getTodos(todoName);
 		todo.toggleCompleted();
-		console.log(todo);
 	}
 
 	return {

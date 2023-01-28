@@ -246,7 +246,7 @@ export default (function DomControl() {
 			const todoCompleteButton = createDomElement(
 				'div',
 				'todo-complete-btn',
-				"It's done!"
+				'Mark as completed'
 			);
 			todoCompleteButton.addEventListener('click', (e) => {
 				Project.completeTodo(
