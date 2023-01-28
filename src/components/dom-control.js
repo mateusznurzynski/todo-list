@@ -224,11 +224,12 @@ export default (function DomControl() {
 			const todoCollapseElement = createDomElement(
 				'div',
 				'collapse todo-details-container',
-				`<div class="todo-details">Name: ${todo.getName()} Priority: ${todo.getPriority(
+				`<div class="todo-details"><div class="details-wrapper editable"><div class="todo-detail">Name: ${todo.getName()}</div><div class="todo-detail"> Priority: ${todo.getPriority(
 					true
-				)} Due date: ${todo.getDueDate(
+				)}</div><div class="todo-detail"> Due date: ${todo.getDueDate(
 					true
-				)} Creation date: ${todo.getCreationDate()}</div>`
+				)}</div></div> <div class="details-wrapper uneditable">Creation date: ${todo.getCreationDate()}</div></div>
+				<div class="todo-details-controls"><div class="todo-edit-btn">Edit</div> <div class="todo-complete-btn">It's Done!</div></div>`
 			);
 			todoCollapseElement.id = `collapseTodo${todoId}`;
 

@@ -37,6 +37,7 @@ html {
 	--dark: #343a40;
 
 	--danger-hover: #fd3e51;
+	--success-hover: #31b14f;
 }
 
 body {
@@ -238,7 +239,56 @@ nav {
 }
 
 .todo-details {
+	display: flex;
+	justify-content: space-between;
+}
+
+.todo-details-controls {
+	display: flex;
+	width: 100%;
+	justify-content: end;
+	gap: 10px;
+}
+
+.todo-edit-btn {
+	background-color: var(--danger);
+	cursor: pointer;
+	padding: 5px 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.todo-edit-btn:hover {
+	background-color: var(--danger-hover);
+}
+
+.todo-complete-btn {
+	background-color: var(--success);
+	cursor: pointer;
+	padding: 5px 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.todo-complete-btn:hover {
+	background-color: var(--success-hover);
+}
+
+.todo-details,
+.todo-details-controls {
 	padding: 10px;
+}
+
+.details-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.details-wrapper.uneditable {
+	color: gray;
 }
 
 .todo-submit-btn {
