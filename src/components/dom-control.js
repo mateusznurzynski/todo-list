@@ -260,6 +260,14 @@ export default (function DomControl() {
 				'todo-edit-btn',
 				'Edit'
 			);
+			todoEditButton.addEventListener('click', (e) => {
+				initTodoEdit(
+					todo.getName(),
+					project.getName(),
+					initial,
+					todoElement
+				);
+			});
 			todoControlsElement.appendChild(todoEditButton);
 			todoControlsElement.appendChild(todoCompleteButton);
 			todoCollapseElement.appendChild(todoControlsElement);
@@ -333,6 +341,12 @@ export default (function DomControl() {
 			PubSub.publish('projectsChanged', Project.getProject());
 		});
 		console.log(editForm);
+	}
+
+	function initTodoEdit(todoName, projectName, initial, todoElement) {
+		const todoModalElement = document.querySelector('#editTodoModal');
+		const modal = new Modal(todoModalElement);
+		modal.show();
 	}
 
 	return {

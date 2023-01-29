@@ -297,7 +297,7 @@ nav {
 }
 
 .footer {
-	height: 50px;
+	min-height: 50px;
 	background-color: var(--nav-background);
 	color: var(--nav-color);
 	width: 100%;
