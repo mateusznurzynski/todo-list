@@ -400,7 +400,7 @@ export default (function DomControl() {
 			e.preventDefault();
 			const formData = new FormData(todoFormElement);
 
-			Project.editTodo(formData, todo);
+			const edited = Project.editTodo(formData, todo, project);
 		});
 		modalBodyElement.appendChild(todoFormElement);
 
