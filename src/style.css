@@ -296,6 +296,13 @@ nav {
 	padding: 3px;
 }
 
+.edit-todo-inputs {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	justify-content: center;
+}
+
 .footer {
 	min-height: 50px;
 	background-color: var(--nav-background);

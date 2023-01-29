@@ -261,12 +261,7 @@ export default (function DomControl() {
 				'Edit'
 			);
 			todoEditButton.addEventListener('click', (e) => {
-				initTodoEdit(
-					todo.getName(),
-					project.getName(),
-					initial,
-					todoElement
-				);
+				initTodoEdit(todo, project, initial, todoElement);
 			});
 			todoControlsElement.appendChild(todoEditButton);
 			todoControlsElement.appendChild(todoCompleteButton);
@@ -343,9 +338,85 @@ export default (function DomControl() {
 		console.log(editForm);
 	}
 
-	function initTodoEdit(todoName, projectName, initial, todoElement) {
+	function initTodoEdit(todo, project, initial, todoElement) {
 		const todoModalElement = document.querySelector('#editTodoModal');
 		const modal = new Modal(todoModalElement);
+		const modalHeaderElement =
+			todoModalElement.querySelector('.modal-header');
+		const modalBodyElement = todoModalElement.querySelector('.modal-body');
+		const modalFooterElement =
+			todoModalElement.querySelector('.modal-footer');
+
+		modalHeaderElement.innerHTML = `<h1 class="modal-title fs-5" id="editTodoModalLabel">
+			Edit ${todo.getName()}:
+		</h1>
+		<button
+			type="button"
+			class="btn-close"
+			data-bs-dismiss="modal"
+			aria-label="Close"
+		></button>`;
+
+		modalBodyElement.innerHTML = '';
+		const todoFormElement = createDomElement(
+			'form',
+			'editTodoForm',
+			`<div class="edit-todo-inputs">
+		<div class="input-wrapper">
+			Name:
+			<input
+				type="text"
+				name="newTodoName"
+				id="newTodoName"
+				value="${todo.getName()}"
+			/>
+		</div>
+		<div class="input-wrapper">
+			Priority:
+			<select
+				name="newTodoPriority"
+				id="newTodoPriority"
+			>
+				<option ${todo.getPriority() === 0 ? 'selected' : ''} value="0">Low</option>
+				<option ${todo.getPriority() === 1 ? 'selected' : ''} value="1">Normal</option>
+				<option ${todo.getPriority() === 2 ? 'selected' : ''} value="2">High</option>
+				<option ${
+					todo.getPriority() === 3 ? 'selected' : ''
+				} value="3">Very High</option>
+			</select>
+		</div>
+		<div class="input-wrapper">
+			Due date:
+			<input
+				type="date"
+				name="newTodoDueDate"
+				id="newTodoDueDate"
+			/>
+		</div>
+	</div>`
+		);
+		todoFormElement.id = 'editTodoForm';
+		todoFormElement.addEventListener('submit', (e) => {
+			e.preventDefault();
+			Project.editTodo();
+		});
+		modalBodyElement.appendChild(todoFormElement);
+
+		modalFooterElement.innerHTML = `<button
+			type="button"
+			class="btn btn-secondary"
+			data-bs-dismiss="modal"
+		>
+			Cancel
+		</button>
+		<button
+			type="submit"
+			form="editTodoForm"
+			class="btn btn-success"
+		>
+			Save
+		</button>`;
+
 		modal.show();
 	}
 

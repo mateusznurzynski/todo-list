@@ -205,6 +205,8 @@ export default (function Project() {
 		todo.toggleCompleted();
 	}
 
+	function editTodo() {}
+
 	return {
 		createProject,
 		editProject,
@@ -213,5 +215,6 @@ export default (function Project() {
 		createTodo,
 		removeTodo,
 		completeTodo,
+		editTodo,
 	};
 })();
