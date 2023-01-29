@@ -66,6 +66,16 @@ export default (function Project() {
 		toggleCompleted() {
 			this.completed = !this.completed;
 		},
+		editName(newName) {
+			this.name = newName;
+		},
+		editPriority(newPriority) {
+			this.priority = newPriority;
+		},
+		editDueDate(newDueDate) {
+			const parsedDate = parseISO(newDueDate);
+			this.dueDate = parsedDate ? format(parsedDate, 'dd-MM-yyyy') : null;
+		},
 	};
 
 	const INITIAL_PROJECTS = [
@@ -205,7 +215,26 @@ export default (function Project() {
 		todo.toggleCompleted();
 	}
 
-	function editTodo() {}
+	function editTodo(formData, todoObject, projectName, todoName, initial) {
+		if (!formData) {
+			return false;
+		}
+		let todo;
+		if (todoObject) {
+			todo = todoObject;
+		} else if (projectName && todoName) {
+			const project = getProject(projectName, initial);
+			todo = project.getTodos(todoName);
+		} else {
+			return false;
+		}
+
+		todo.editName(formData.get('newTodoName'));
+		todo.editPriority(formData.get('newTodoPriority'));
+		todo.editDueDate(formData.get('newTodoDueDate'));
+
+		console.log(todo);
+	}
 
 	return {
 		createProject,

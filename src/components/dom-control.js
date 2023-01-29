@@ -398,7 +398,9 @@ export default (function DomControl() {
 		todoFormElement.id = 'editTodoForm';
 		todoFormElement.addEventListener('submit', (e) => {
 			e.preventDefault();
-			Project.editTodo();
+			const formData = new FormData(todoFormElement);
+
+			Project.editTodo(formData, todo);
 		});
 		modalBodyElement.appendChild(todoFormElement);
 
