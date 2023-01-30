@@ -198,10 +198,7 @@ export default (function DomControl() {
 			const todoBasicInfoElement = createDomElement(
 				'div',
 				'todo-basic-info',
-				`<div>Name: ${todo.getName()} Due date: ${todo.getDueDate(
-					true
-				)} Priority: ${todo.getPriority(true)}
-				</div>`
+				`<div class="basic-info-text"></div>`
 			);
 
 			const todoCollapseButton = createDomElement(
@@ -224,12 +221,7 @@ export default (function DomControl() {
 			const todoCollapseElement = createDomElement(
 				'div',
 				'collapse todo-details-container',
-				`<div class="todo-details"><div class="details-wrapper editable"><div class="todo-detail">Name: ${todo.getName()}</div><div class="todo-detail"> Priority: ${todo.getPriority(
-					true
-				)}</div><div class="todo-detail"> Due date: ${todo.getDueDate(
-					true
-				)}</div></div> <div class="details-wrapper uneditable">Creation date: ${todo.getCreationDate()}</div></div>
-				`
+				`<div class="details-text"></div>`
 			);
 			todoCollapseElement.id = `collapseTodo${todoId}`;
 
@@ -246,7 +238,7 @@ export default (function DomControl() {
 			const todoCompleteButton = createDomElement(
 				'div',
 				'todo-complete-btn',
-				'Mark as completed'
+				''
 			);
 			todoCompleteButton.addEventListener('click', (e) => {
 				Project.completeTodo(
@@ -282,6 +274,8 @@ export default (function DomControl() {
 			todoElement.appendChild(todoCollapseElement);
 
 			todosElement.appendChild(todoElement);
+
+			refreshTodoElementContent(todo, todoElement);
 		});
 		mainElement.appendChild(todosElement);
 	}
@@ -404,6 +398,7 @@ export default (function DomControl() {
 			const edited = Project.editTodo(formData, todo, project);
 			if (edited) {
 				modal.hide();
+				refreshTodoElementContent(todo, todoElement);
 			}
 		});
 		modalBodyElement.appendChild(todoFormElement);
@@ -424,6 +419,48 @@ export default (function DomControl() {
 		</button>`;
 
 		modal.show();
+	}
+
+	function refreshTodoElementContent(todo, todoElement) {
+		console.log(todoElement);
+		const todoBasicInfo = createDomElement(
+			'div',
+			'',
+			`<div>Name: ${todo.getName()} Due date: ${todo.getDueDate(
+				true
+			)} Priority: ${todo.getPriority(true)}
+			</div>`
+		);
+
+		const todoDetailedInfo = createDomElement(
+			'div',
+			'todo-details',
+			`<div class="details-wrapper editable"><div class="todo-detail">Name: ${todo.getName()}</div><div class="todo-detail"> Priority: ${todo.getPriority(
+				true
+			)}</div><div class="todo-detail"> Due date: ${todo.getDueDate(
+				true
+			)}</div></div> <div class="details-wrapper uneditable">Creation date: ${todo.getCreationDate()}</div>`
+		);
+
+		const todoCompleteText = `Mark as completed`;
+
+		const todoBasicInfoElement =
+			todoElement.querySelector('.basic-info-text');
+		console.log(todoBasicInfoElement);
+
+		const todoDetailsContainerElement =
+			todoElement.querySelector('.details-text');
+
+		const todoCompleteButtonElement =
+			todoElement.querySelector('.todo-complete-btn');
+
+		todoBasicInfoElement.innerHTML = '';
+		todoDetailsContainerElement.innerHTML = '';
+		todoCompleteButtonElement.textContent = '';
+
+		todoBasicInfoElement.appendChild(todoBasicInfo);
+		todoDetailsContainerElement.appendChild(todoDetailedInfo);
+		todoCompleteButtonElement.textContent = `Mark as completed`;
 	}
 
 	return {
