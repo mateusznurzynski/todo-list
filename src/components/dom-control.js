@@ -358,6 +358,7 @@ export default (function DomControl() {
 		></button>`;
 
 		modalBodyElement.innerHTML = '';
+		console.log(todo.getPriority());
 		const todoFormElement = createDomElement(
 			'form',
 			'editTodoForm',
@@ -401,6 +402,9 @@ export default (function DomControl() {
 			const formData = new FormData(todoFormElement);
 
 			const edited = Project.editTodo(formData, todo, project);
+			if (edited) {
+				modal.hide();
+			}
 		});
 		modalBodyElement.appendChild(todoFormElement);
 

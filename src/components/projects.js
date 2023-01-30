@@ -70,7 +70,7 @@ export default (function Project() {
 			this.name = newName;
 		},
 		editPriority(newPriority) {
-			this.priority = newPriority;
+			this.priority = +newPriority;
 		},
 		editDueDate(newDueDate) {
 			const parsedDate = newDueDate ? parseISO(newDueDate) : null;
@@ -191,8 +191,12 @@ export default (function Project() {
 	}
 
 	function validateTodoName(name, todosArray) {
-		if (!checkStringLength(name, 1, 50)) {
-			alert('Todo name must be between 1 to 50 characters');
+		const TODO_MIN_LENGTH = 1;
+		const TODO_MAX_LENGTH = 50;
+		if (!checkStringLength(name, TODO_MIN_LENGTH, TODO_MAX_LENGTH)) {
+			alert(
+				`Todo name must be between ${TODO_MIN_LENGTH} to ${TODO_MAX_LENGTH} characters`
+			);
 			return false;
 		}
 
@@ -225,14 +229,17 @@ export default (function Project() {
 			return false;
 		}
 
-		if (
-			!validateTodoName(
-				formData.get('newTodoName'),
-				projectObject.getTodos()
-			)
-		) {
-			return false;
+		if (formData.get('newTodoName') !== todoObject.getName()) {
+			if (
+				!validateTodoName(
+					formData.get('newTodoName'),
+					projectObject.getTodos()
+				)
+			) {
+				return false;
+			}
 		}
+
 		todo.editName(formData.get('newTodoName'));
 		todo.editPriority(formData.get('newTodoPriority'));
 		todo.editDueDate(formData.get('newTodoDueDate'));
