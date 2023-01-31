@@ -208,6 +208,28 @@ nav {
 	white-space: nowrap;
 }
 
+.todo-form-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.todo-form-btn {
+	padding: 5px;
+	background-color: #8b8b8b;
+	cursor: pointer;
+}
+
+.todo-form-cancel-btn {
+	padding: 5px;
+	background-color: var(--danger);
+	cursor: pointer;
+}
+
+.todo-form-cancel-btn:hover {
+	background-color: var(--danger-hover);
+}
+
 .todo-element {
 	flex-direction: column;
 	justify-content: center;
