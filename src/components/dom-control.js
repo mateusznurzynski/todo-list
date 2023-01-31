@@ -158,6 +158,19 @@ export default (function DomControl() {
 	}
 
 	function renderTodoForm(project, initial) {
+		const todoFormWrapper = createDomElement('div', 'todo-form-wrapper');
+
+		const todoFormButtonElement = createDomElement(
+			'div',
+			'todo-form-btn',
+			'Add new todo'
+		);
+		todoFormButtonElement.addEventListener('click', (e) => {
+			todoFormWrapper.innerHTML = '';
+			todoFormWrapper.appendChild(todoFormElement);
+		});
+		todoFormWrapper.appendChild(todoFormButtonElement);
+
 		const todoFormElement = createDomElement(
 			'form',
 			'todo-form todo-container',
@@ -176,12 +189,23 @@ export default (function DomControl() {
 			class="todo-submit-btn"
 		/>`
 		);
+		const todoFormCancelElement = createDomElement(
+			'div',
+			'todo-form-cancel-btn',
+			'Cancel'
+		);
+		todoFormCancelElement.addEventListener('click', (e) => {
+			todoFormWrapper.innerHTML = '';
+			todoFormElement.reset();
+			todoFormWrapper.appendChild(todoFormButtonElement);
+		});
+		todoFormElement.appendChild(todoFormCancelElement);
 		todoFormElement.addEventListener('submit', (e) => {
 			e.preventDefault();
 			const formData = new FormData(e.target);
 			Project.createTodo(formData, project.getName(), initial);
 		});
-		mainElement.appendChild(todoFormElement);
+		mainElement.appendChild(todoFormWrapper);
 	}
 
 	function renderTodos(project, initial) {
