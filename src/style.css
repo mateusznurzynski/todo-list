@@ -8,6 +8,10 @@ html {
 	margin: 0;
 	padding: 0;
 }
+input[type='submit'] {
+	border: none;
+	outline: none;
+}
 
 @font-face {
 	font-family: 'Quicksand';
@@ -42,6 +46,11 @@ html {
 
 body {
 	background-color: var(--main-background);
+}
+
+input[type='text'],
+select {
+	height: 28px;
 }
 
 button {
@@ -82,6 +91,12 @@ nav {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+}
+
+.input-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
 }
 
 .main-wrapper {
@@ -202,6 +217,7 @@ nav {
 	justify-content: start;
 	align-items: center;
 	width: 100%;
+	height: 100%;
 	background-color: gray;
 	gap: 5px;
 	padding: 15px 20px;
@@ -214,14 +230,39 @@ nav {
 	align-items: center;
 }
 
+.todo-form {
+	width: unset;
+	align-items: flex-start;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.todo-form-inputs-wrapper {
+	display: flex;
+	gap: 5px;
+}
+
+.todo-form-control-wrapper {
+	justify-content: flex-end;
+	height: 100%;
+	width: 100%;
+}
+
 .todo-form-btn {
 	padding: 5px;
 	background-color: #8b8b8b;
 	cursor: pointer;
 }
 
+.todo-control-btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	padding: 7px;
+}
+
 .todo-form-cancel-btn {
-	padding: 5px;
 	background-color: var(--danger);
 	cursor: pointer;
 }
@@ -311,11 +352,6 @@ nav {
 
 .details-wrapper.uneditable {
 	color: gray;
-}
-
-.todo-submit-btn {
-	margin-left: auto;
-	padding: 3px;
 }
 
 .edit-todo-inputs {

@@ -174,24 +174,23 @@ export default (function DomControl() {
 		const todoFormElement = createDomElement(
 			'form',
 			'todo-form todo-container',
-			`Name:<input type="text" name="todo-name" id="todo-name" />
+			`<div class="todo-form-inputs-wrapper"><div class="input-wrapper">
+			Name:<input type="text" name="todo-name" id="todo-name" />
 			Due date:<input type="date" name="todo-date" id="todo-date" />
+			</div>
+			<div class="input-wrapper">
 			Priority: <select name="todo-priority">
 			<option value="0">Low</option>
 			<option selected value="1">Normal</option>
 			<option value="2">High</option>
 			<option value="3">Very High</option>
 			</select>
-		<input
-			type="submit"
-			name="todo-submit"
-			id="todo-submit"
-			class="todo-submit-btn"
-		/>`
+			Description: <input type="text" name="todo-desc" id="todo-desc" />
+			</div></div>`
 		);
 		const todoFormCancelElement = createDomElement(
 			'div',
-			'todo-form-cancel-btn',
+			'todo-form-cancel-btn todo-control-btn',
 			'Cancel'
 		);
 		todoFormCancelElement.addEventListener('click', (e) => {
@@ -199,7 +198,20 @@ export default (function DomControl() {
 			todoFormElement.reset();
 			todoFormWrapper.appendChild(todoFormButtonElement);
 		});
-		todoFormElement.appendChild(todoFormCancelElement);
+
+		const todoFormControlWrapper = createDomElement(
+			'div',
+			'input-wrapper todo-form-control-wrapper',
+			`<input
+			type="submit"
+			name="todo-submit"
+			id="todo-submit"
+			class="todo-submit-btn todo-control-btn"
+			/>`
+		);
+		todoFormControlWrapper.appendChild(todoFormCancelElement);
+		todoFormElement.appendChild(todoFormControlWrapper);
+
 		todoFormElement.addEventListener('submit', (e) => {
 			e.preventDefault();
 			const formData = new FormData(e.target);
