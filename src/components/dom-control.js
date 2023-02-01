@@ -424,6 +424,14 @@ export default (function DomControl() {
 				id="newTodoDueDate"
 			/>
 		</div>
+		<div class="input-wrapper">
+			Description:
+			<textarea
+				name="newTodoDescription"
+				id="newTodoDescription"
+				rows="3"
+			/>${todo.getDescription(false)}</textarea>
+		</div>
 	</div>`
 		);
 		todoFormElement.id = 'editTodoForm';

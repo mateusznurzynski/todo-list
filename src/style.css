@@ -53,6 +53,10 @@ select {
 	height: 28px;
 }
 
+textarea {
+	resize: none;
+}
+
 button {
 	border: none;
 	outline: none;
