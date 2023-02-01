@@ -80,6 +80,10 @@ nav {
 	padding: 10px;
 }
 
+.width-half {
+	width: 50%;
+}
+
 .flex {
 	display: flex;
 }

@@ -174,18 +174,18 @@ export default (function DomControl() {
 		const todoFormElement = createDomElement(
 			'form',
 			'todo-form todo-container',
-			`<div class="todo-form-inputs-wrapper"><div class="input-wrapper">
+			`<div class="todo-form-inputs-wrapper"><div class="input-wrapper width-half">
 			Name:<input type="text" name="todo-name" id="todo-name" />
 			Due date:<input type="date" name="todo-date" id="todo-date" />
 			</div>
-			<div class="input-wrapper">
+			<div class="input-wrapper width-half">
 			Priority: <select name="todo-priority">
 			<option value="0">Low</option>
 			<option selected value="1">Normal</option>
 			<option value="2">High</option>
 			<option value="3">Very High</option>
 			</select>
-			Description: <input type="text" name="todo-desc" id="todo-desc" />
+			Description: <textarea name="todo-desc" id="todo-desc"></textarea>
 			</div></div>`
 		);
 		const todoFormCancelElement = createDomElement(
