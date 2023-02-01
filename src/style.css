@@ -304,6 +304,26 @@ nav {
 .todo-details {
 	display: flex;
 	justify-content: space-between;
+	max-height: 110px;
+}
+
+.details-text {
+	max-height: 110px;
+}
+
+.todo-detail {
+	display: inline-block;
+	overflow-wrap: break-word;
+	word-break: break-word;
+	white-space: break-spaces;
+	hyphens: auto;
+	width: 200px;
+}
+
+.long-string {
+	overflow-y: auto;
+	height: 100%;
+	width: 100%;
 }
 
 .todo-details-controls {
@@ -348,10 +368,12 @@ nav {
 	display: flex;
 	flex-direction: column;
 	gap: 5px;
+	width: 33%;
 }
 
 .details-wrapper.uneditable {
 	color: gray;
+	align-items: flex-end;
 }
 
 .edit-todo-inputs {

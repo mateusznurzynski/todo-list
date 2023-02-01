@@ -63,6 +63,13 @@ export default (function Project() {
 		getCreationDate() {
 			return this.creationDate;
 		},
+		getDescription(checkIfExists) {
+			if (checkIfExists) {
+				return this.description ? this.description : 'No description';
+			} else {
+				return this.description;
+			}
+		},
 		toggleCompleted() {
 			this.completed = !this.completed;
 		},
@@ -181,8 +188,11 @@ export default (function Project() {
 			creationDate: format(new Date(), 'dd-MM-yyyy, HH:mm'),
 			dueDate: parsedDate ? format(parsedDate, 'dd-MM-yyyy') : null,
 			priority: +data.get('todo-priority') || 1,
+			description: data.get('todo-desc') ? data.get('todo-desc') : '',
 			completed: false,
 		};
+
+		console.log(state);
 
 		todosArray.push(Object.assign({}, defaultTodo, state));
 		PubSub.publish('todosChanged', projectName);

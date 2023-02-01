@@ -471,11 +471,14 @@ export default (function DomControl() {
 		const todoDetailedInfo = createDomElement(
 			'div',
 			'todo-details',
-			`<div class="details-wrapper editable"><div class="todo-detail">Name: ${todo.getName()}</div><div class="todo-detail"> Priority: ${todo.getPriority(
+			`<div class="details-wrapper editable"><div class="todo-detail"> Name: ${todo.getName()}</div><div class="todo-detail"> Priority: ${todo.getPriority(
 				true
 			)}</div><div class="todo-detail"> Due date: ${todo.getDueDate(
 				true
-			)}</div></div> <div class="details-wrapper uneditable">Creation date: ${todo.getCreationDate()}</div>`
+			)}</div></div> 
+			<div class="details-wrapper editable"><div class="todo-detail">Description:</div>
+			<div class="todo-detail long-string">${todo.getDescription(true)}</div></div>
+			<div class="details-wrapper uneditable">Creation date: ${todo.getCreationDate()}</div>`
 		);
 
 		const todoCompleteText = `Mark as completed`;
