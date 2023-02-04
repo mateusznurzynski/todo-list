@@ -1,6 +1,6 @@
 import PubSub from 'pubsub-js';
 import { checkNameAvailability, checkStringLength } from '../utils/utilities';
-import { format, parse, parseISO } from 'date-fns';
+import { format, parse, parseISO, differenceInDays } from 'date-fns';
 
 export default (function Project() {
 	// * * *
@@ -13,7 +13,13 @@ export default (function Project() {
 		getName() {
 			return this.name;
 		},
+		getType() {
+			return this.type;
+		},
 		editName(newName) {
+			if (this.type === 'filter' || this.type === 'default') {
+				return false;
+			}
 			this.name = newName;
 		},
 		getTodos(todoName) {
@@ -53,9 +59,11 @@ export default (function Project() {
 				return this.priority;
 			}
 		},
-		getDueDate(checkIfExists) {
-			if (checkIfExists) {
-				return this.dueDate ? this.dueDate : 'Not Specified';
+		getDueDate(returnAsString) {
+			if (returnAsString) {
+				return this.dueDate
+					? format(this.dueDate, 'dd-MM-yyyy')
+					: 'Not Specified';
 			} else {
 				return this.dueDate;
 			}
@@ -89,6 +97,22 @@ export default (function Project() {
 		Object.assign({}, defaultProject, {
 			name: 'Unsorted todos',
 			todos: [],
+			type: 'default',
+		}),
+		Object.assign({}, defaultProject, {
+			name: 'Due in 7 days',
+			filter: 7,
+			todos: [],
+			type: 'filter',
+			clearTodos() {
+				this.todos = [];
+			},
+			setTodos(newTodosArray) {
+				this.todos = newTodosArray;
+			},
+			getFilter() {
+				return this.filter;
+			},
 		}),
 	];
 
@@ -186,7 +210,7 @@ export default (function Project() {
 		const state = {
 			name: data.get('todo-name'),
 			creationDate: format(new Date(), 'dd-MM-yyyy, HH:mm'),
-			dueDate: parsedDate ? format(parsedDate, 'dd-MM-yyyy') : null,
+			dueDate: parsedDate ? parsedDate : null,
 			priority: +data.get('todo-priority') || 1,
 			description: data.get('todo-desc') ? data.get('todo-desc') : '',
 			completed: false,
@@ -258,6 +282,56 @@ export default (function Project() {
 		return true;
 	}
 
+	function getAllTodos() {
+		let projectsTodos = [];
+		let initialProjectsTodos = [];
+
+		projects.forEach((project) => {
+			const todos = project.getTodos();
+			projectsTodos = [...projectsTodos, ...todos];
+		});
+		INITIAL_PROJECTS.forEach((project) => {
+			if (project.getType() === 'default') {
+				const todos = project.getTodos();
+				initialProjectsTodos = [...initialProjectsTodos, ...todos];
+			}
+		});
+
+		const allTodos = [...projectsTodos, ...initialProjectsTodos];
+
+		return allTodos;
+	}
+
+	function filterTodos(filterProject) {
+		filterProject.clearTodos();
+
+		const allTodos = getAllTodos();
+
+		const todayDate = new Date();
+
+		const filteredTodos = allTodos.filter((todo) => {
+			const dueDate = todo.getDueDate();
+			if (!dueDate) {
+				return false;
+			}
+			console.log(
+				dueDate,
+				todayDate,
+				differenceInDays(dueDate, todayDate)
+			);
+			if (
+				differenceInDays(dueDate, todayDate) <=
+				filterProject.getFilter()
+			) {
+				return true;
+			}
+		});
+
+		filterProject.setTodos(filteredTodos);
+
+		console.log(filteredTodos);
+	}
+
 	return {
 		createProject,
 		editProject,
@@ -267,5 +341,6 @@ export default (function Project() {
 		removeTodo,
 		completeTodo,
 		editTodo,
+		filterTodos,
 	};
 })();

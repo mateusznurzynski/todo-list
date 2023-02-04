@@ -123,7 +123,6 @@ export default (function DomControl() {
 	}
 
 	function renderProject(projectName, initial) {
-		console.log('rendered: ', projectName);
 		const project = initial
 			? Project.getProject(projectName, true)
 			: Project.getProject(projectName);
@@ -158,6 +157,10 @@ export default (function DomControl() {
 	}
 
 	function renderTodoForm(project, initial) {
+		if (project.getType() === 'filter') {
+			return false;
+		}
+
 		const todoFormWrapper = createDomElement('div', 'todo-form-wrapper');
 
 		const todoFormButtonElement = createDomElement(
@@ -221,6 +224,9 @@ export default (function DomControl() {
 	}
 
 	function renderTodos(project, initial) {
+		if (project.getType() === 'filter') {
+			Project.filterTodos(project);
+		}
 		const todos = project.getTodos();
 		const todosElement = createDomElement('section', 'todos');
 		const todoDefaultElement = createDomElement(
@@ -365,7 +371,6 @@ export default (function DomControl() {
 			}
 			PubSub.publish('projectsChanged', Project.getProject());
 		});
-		console.log(editForm);
 	}
 
 	function initTodoEdit(todo, project, initial, todoElement) {
@@ -388,7 +393,6 @@ export default (function DomControl() {
 		></button>`;
 
 		modalBodyElement.innerHTML = '';
-		console.log(todo.getPriority());
 		const todoFormElement = createDomElement(
 			'form',
 			'editTodoForm',
@@ -466,7 +470,6 @@ export default (function DomControl() {
 	}
 
 	function refreshTodoElementContent(todo, todoElement) {
-		console.log(todoElement);
 		const todoBasicInfo = createDomElement(
 			'div',
 			'',
@@ -493,7 +496,6 @@ export default (function DomControl() {
 
 		const todoBasicInfoElement =
 			todoElement.querySelector('.basic-info-text');
-		console.log(todoBasicInfoElement);
 
 		const todoDetailsContainerElement =
 			todoElement.querySelector('.details-text');
