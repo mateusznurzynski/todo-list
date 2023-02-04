@@ -106,7 +106,7 @@ export default (function Project() {
 		},
 		editDueDate(newDueDate) {
 			const parsedDate = newDueDate ? parseISO(newDueDate) : null;
-			this.dueDate = parsedDate ? format(parsedDate, 'dd-MM-yyyy') : null;
+			this.dueDate = parsedDate ? parsedDate : null;
 		},
 	};
 
@@ -282,7 +282,14 @@ export default (function Project() {
 
 		todo.editName(formData.get('newTodoName'));
 		todo.editPriority(formData.get('newTodoPriority'));
-		todo.editDueDate(formData.get('newTodoDueDate'));
+
+		if (formData.get('todoNoDate')) {
+			todo.editDueDate('');
+		} else if (formData.get('newTodoDueDate')) {
+			todo.editDueDate(formData.get('newTodoDueDate'));
+		} else {
+			todo.editDueDate(formData.get('oldTodoDueDate'));
+		}
 
 		console.log(todo);
 		return true;

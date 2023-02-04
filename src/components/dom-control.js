@@ -427,6 +427,21 @@ export default (function DomControl() {
 				name="newTodoDueDate"
 				id="newTodoDueDate"
 			/>
+			<input
+				type="hidden"
+				name="oldTodoDueDate"
+				id="oldTodoDueDate"
+				value="${todo.getDueDate() ? todo.getDueDate() : ''}"
+			/>
+		</div>
+		<div class="input-wrapper checkbox-wrapper">
+			Don't specify a due date
+			<input
+				type="checkbox"
+				name="todoNoDate"
+				id="todoNoDate"
+				${todo.getDueDate() ? '' : 'checked'}
+			/>
 		</div>
 		<div class="input-wrapper">
 			Description:

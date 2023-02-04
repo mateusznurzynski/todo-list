@@ -107,6 +107,11 @@ nav {
 	gap: 5px;
 }
 
+.input-wrapper.checkbox-wrapper {
+	flex-direction: row-reverse;
+	justify-content: flex-end;
+}
+
 .main-wrapper {
 	height: 100%;
 	width: 100%;
