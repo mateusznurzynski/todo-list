@@ -117,7 +117,7 @@ export default (function Project() {
 			type: 'default',
 		}),
 		Object.assign({}, defaultProject, defaultFilterProject, {
-			name: `Due in ${this.filter} days`,
+			name: `Due in 7 days`,
 			filter: 7,
 			todos: [],
 			type: 'filter',
