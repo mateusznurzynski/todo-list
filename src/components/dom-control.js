@@ -438,12 +438,7 @@ export default (function DomControl() {
 		</div>
 		<div class="input-wrapper checkbox-wrapper">
 			Don't specify a due date
-			<input
-				type="checkbox"
-				name="todoNoDate"
-				id="todoNoDate"
-				${todo.getDueDate() ? '' : 'checked'}
-			/>
+			<div class="date-checkbox"></div>
 		</div>
 		<div class="input-wrapper">
 			Description:
@@ -455,6 +450,24 @@ export default (function DomControl() {
 		</div>
 	</div>`
 		);
+		const dateCheckboxElement = createDomElement('input');
+		dateCheckboxElement.setAttribute('name', 'todoNoDate');
+		dateCheckboxElement.setAttribute('type', 'checkbox');
+		if (todo.getDueDate()) {
+			dateCheckboxElement.toggleAttribute('checked', true);
+		}
+		dateCheckboxElement.addEventListener('input', (e) => {
+			const dateInput = todoFormElement.querySelector('#newTodoDueDate');
+			if (dateCheckboxElement.checked) {
+				dateInput.toggleAttribute('disabled', true);
+			} else {
+				dateInput.removeAttribute('disabled');
+			}
+		});
+		todoFormElement
+			.querySelector('.date-checkbox')
+			.appendChild(dateCheckboxElement);
+
 		todoFormElement.id = 'editTodoForm';
 		todoFormElement.addEventListener('submit', (e) => {
 			e.preventDefault();
