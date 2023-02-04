@@ -101,6 +101,10 @@ nav {
 	align-items: center;
 }
 
+.text-gray {
+	color: gray;
+}
+
 .input-wrapper {
 	display: flex;
 	flex-direction: column;

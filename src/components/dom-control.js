@@ -421,7 +421,9 @@ export default (function DomControl() {
 			</select>
 		</div>
 		<div class="input-wrapper">
-			Due date:
+			<div>Due date: <span class="text-gray">(Currently ${todo.getDueDate(
+				true
+			)})</span></div>
 			<input
 				type="date"
 				name="newTodoDueDate"
