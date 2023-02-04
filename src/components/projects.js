@@ -37,6 +37,23 @@ export default (function Project() {
 		},
 	};
 
+	const defaultFilterProject = {
+		clearTodos() {
+			this.todos = [];
+		},
+		setTodos(newTodosArray) {
+			if (Array.isArray(newTodosArray)) {
+				this.todos = newTodosArray;
+			}
+		},
+		getFilter(asString) {
+			if (asString) {
+				return `${this.filter} days`;
+			}
+			return this.filter;
+		},
+	};
+
 	const defaultTodo = {
 		getName() {
 			return this.name;
@@ -59,8 +76,8 @@ export default (function Project() {
 				return this.priority;
 			}
 		},
-		getDueDate(returnAsString) {
-			if (returnAsString) {
+		getDueDate(asString) {
+			if (asString) {
 				return this.dueDate
 					? format(this.dueDate, 'dd-MM-yyyy')
 					: 'Not Specified';
@@ -99,20 +116,11 @@ export default (function Project() {
 			todos: [],
 			type: 'default',
 		}),
-		Object.assign({}, defaultProject, {
-			name: 'Due in 7 days',
+		Object.assign({}, defaultProject, defaultFilterProject, {
+			name: `Due in ${this.filter} days`,
 			filter: 7,
 			todos: [],
 			type: 'filter',
-			clearTodos() {
-				this.todos = [];
-			},
-			setTodos(newTodosArray) {
-				this.todos = newTodosArray;
-			},
-			getFilter() {
-				return this.filter;
-			},
 		}),
 	];
 
