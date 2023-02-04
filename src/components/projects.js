@@ -216,8 +216,6 @@ export default (function Project() {
 			completed: false,
 		};
 
-		console.log(state);
-
 		todosArray.push(Object.assign({}, defaultTodo, state));
 		PubSub.publish('todosChanged', projectName);
 
@@ -328,8 +326,6 @@ export default (function Project() {
 		});
 
 		filterProject.setTodos(filteredTodos);
-
-		console.log(filteredTodos);
 	}
 
 	return {
