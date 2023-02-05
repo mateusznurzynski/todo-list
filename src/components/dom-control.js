@@ -102,7 +102,7 @@ export default (function DomControl() {
 				projectElement.appendChild(deleteProjectButton);
 				deleteProjectButton.addEventListener('click', (e) => {
 					e.stopPropagation();
-					PubSub.publish('deleteProjectClicked', e);
+					Project.deleteProject(e);
 				});
 			} else {
 				projectElement.toggleAttribute('data-initial', true);

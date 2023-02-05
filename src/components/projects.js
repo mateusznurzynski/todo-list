@@ -144,13 +144,6 @@ export default (function Project() {
 	function loadProjects() {
 		loadLocalStorage();
 		PubSub.publish('projectsChanged', projects);
-		PubSub.subscribe('deleteProjectClicked', (msg, e) => {
-			const deletedProjectName = e.target.previousElementSibling.title;
-			projects = projects.filter(
-				(project) => project.name !== deletedProjectName
-			);
-			PubSub.publish('projectsChanged', projects);
-		});
 		PubSub.subscribe('dataChanged', (msg, data) => {
 			const projectsString = JSON.stringify(projects);
 			const initialProjectsString = JSON.stringify(INITIAL_PROJECTS);
@@ -212,6 +205,15 @@ export default (function Project() {
 			PubSub.publish('dataChanged');
 			return true;
 		}
+	}
+
+	function deleteProject(e) {
+		const deletedProjectName = e.target.previousElementSibling.title;
+		projects = projects.filter(
+			(project) => project.name !== deletedProjectName
+		);
+		PubSub.publish('projectsChanged', projects);
+		PubSub.publish('dataChanged');
 	}
 
 	function validateProjectName(name) {
@@ -390,6 +392,7 @@ export default (function Project() {
 	return {
 		createProject,
 		editProject,
+		deleteProject,
 		loadProjects,
 		getProject,
 		createTodo,
