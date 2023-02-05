@@ -301,6 +301,31 @@ nav {
 	align-items: center;
 }
 
+.todo-delete-btn {
+	padding: 5px;
+	width: 40px;
+	background-color: gainsboro;
+	margin-right: 10px;
+	cursor: pointer;
+	transition: all 0.2s;
+	border-radius: 5px;
+}
+.todo-delete-btn > img {
+	width: 100%;
+	transition: all 0.2s;
+}
+
+.todo-delete-btn:hover {
+	background-color: var(--danger);
+	transition: all 0.2s;
+}
+
+.todo-delete-btn:hover > img {
+	filter: invert(100%) sepia(1%) saturate(0%) hue-rotate(248deg)
+		brightness(103%) contrast(101%);
+	transition: all 0.2s;
+}
+
 .collapse-todo-btn {
 	margin-left: auto;
 	padding: 3px;

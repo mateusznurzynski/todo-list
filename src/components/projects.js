@@ -278,7 +278,7 @@ export default (function Project() {
 		return true;
 	}
 
-	function removeTodo(event, projectName, todoName, initial) {
+	function removeTodo(projectName, todoName, initial) {
 		const project = getProject(projectName, initial);
 		project.removeTodo(todoName);
 		PubSub.publish('dataChanged');

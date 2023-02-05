@@ -5,6 +5,7 @@ import { Modal } from 'bootstrap';
 import iconAddProject from '../icons/add-project.svg';
 import iconEditProject from '../icons/edit.svg';
 import iconExpand from '../icons/expand.svg';
+import iconDelete from '../icons/delete.svg';
 
 export default (function DomControl() {
 	const DEFAULT_PROJECT = {
@@ -268,10 +269,14 @@ export default (function DomControl() {
 			todoCollapseElement.id = `collapseTodo${todoId}`;
 
 			const todoDeleteButton = createDomElement(
-				'button',
+				'div',
 				'todo-delete-btn',
-				'X'
+				''
 			);
+			const deleteIcon = new Image();
+			deleteIcon.src = iconDelete;
+			deleteIcon.alt = 'Remove Todo';
+			todoDeleteButton.appendChild(deleteIcon);
 
 			const todoControlsElement = createDomElement(
 				'div',
@@ -302,15 +307,14 @@ export default (function DomControl() {
 			todoCollapseElement.appendChild(todoControlsElement);
 
 			todoDeleteButton.addEventListener('click', (e) => {
-				Project.removeTodo(
-					e,
-					project.getName(),
-					todo.getName(),
-					initial
-				);
+				Project.removeTodo(project.getName(), todo.getName(), initial);
 			});
 
 			todoBasicInfoElement.appendChild(todoCollapseButton);
+			todoBasicInfoElement.insertAdjacentElement(
+				'afterbegin',
+				todoDeleteButton
+			);
 
 			todoElement.appendChild(todoBasicInfoElement);
 			todoElement.appendChild(todoCollapseElement);
