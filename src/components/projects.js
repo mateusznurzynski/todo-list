@@ -110,7 +110,7 @@ export default (function Project() {
 		},
 	};
 
-	const INITIAL_PROJECTS = [
+	let INITIAL_PROJECTS = [
 		Object.assign({}, defaultProject, {
 			name: 'Unsorted todos',
 			todos: [],
@@ -137,6 +137,7 @@ export default (function Project() {
 	// * * *
 
 	function loadProjects() {
+		loadLocalStorage();
 		PubSub.publish('projectsChanged', projects);
 		PubSub.subscribe('deleteProjectClicked', (msg, e) => {
 			const deletedProjectName = e.target.previousElementSibling.title;
@@ -145,6 +146,34 @@ export default (function Project() {
 			);
 			PubSub.publish('projectsChanged', projects);
 		});
+		PubSub.subscribe('dataChanged', (msg, data) => {
+			const projectsString = JSON.stringify(projects);
+			const initialProjectsString = JSON.stringify(INITIAL_PROJECTS);
+			localStorage.setItem('projects', projectsString);
+			localStorage.setItem('initialProjects', initialProjectsString);
+		});
+	}
+
+	function loadLocalStorage() {
+		const localProjects = JSON.parse(localStorage.getItem('projects'));
+		const localInitialProjects = JSON.parse(
+			localStorage.getItem('initialProjects')
+		);
+
+		if (localProjects == null) {
+			return false;
+		}
+
+		projects = [];
+		localProjects.forEach((project) => {
+			const newProject = { ...defaultProject, ...project };
+			const newTodos = newProject.getTodos();
+			newTodos.forEach((todo) => {
+				Object.assign(todo, defaultTodo);
+			});
+			projects.push(newProject);
+		});
+		console.log(projects);
 	}
 
 	function createProject(data) {
@@ -159,6 +188,7 @@ export default (function Project() {
 
 		projects.push(Object.assign({}, defaultProject, state));
 		PubSub.publish('projectsChanged', projects);
+		PubSub.publish('dataChanged');
 
 		return true;
 	}
@@ -172,6 +202,7 @@ export default (function Project() {
 			return false;
 		} else {
 			getProject(projectName).editName(newName);
+			PubSub.publish('dataChanged');
 			return true;
 		}
 	}
@@ -226,6 +257,7 @@ export default (function Project() {
 
 		todosArray.push(Object.assign({}, defaultTodo, state));
 		PubSub.publish('todosChanged', projectName);
+		PubSub.publish('dataChanged');
 
 		return true;
 	}
@@ -250,12 +282,14 @@ export default (function Project() {
 	function removeTodo(event, projectName, todoName, initial) {
 		const project = getProject(projectName, initial);
 		project.removeTodo(todoName);
+		PubSub.publish('dataChanged');
 	}
 
 	function completeTodo(projectName, todoName, initial) {
 		const project = getProject(projectName, initial);
 		const todo = project.getTodos(todoName);
 		todo.toggleCompleted();
+		PubSub.publish('dataChanged');
 	}
 
 	function editTodo(formData, todoObject, projectObject) {
@@ -292,6 +326,9 @@ export default (function Project() {
 		}
 
 		console.log(todo);
+
+		PubSub.publish('dataChanged');
+
 		return true;
 	}
 
