@@ -35,9 +35,6 @@ export default (function Project() {
 			});
 			PubSub.publish('todosChanged', this.getName());
 		},
-	};
-
-	const defaultFilterProject = {
 		clearTodos() {
 			this.todos = [];
 		},
@@ -46,6 +43,9 @@ export default (function Project() {
 				this.todos = newTodosArray;
 			}
 		},
+	};
+
+	const defaultFilterProject = {
 		getFilter(asString) {
 			if (asString) {
 				return `${this.filter} days`;
@@ -137,8 +137,14 @@ export default (function Project() {
 		loadLocalStorage();
 		PubSub.publish('projectsChanged', projects);
 		PubSub.subscribe('dataChanged', (msg, data) => {
+			const defaultInitialProjects = INITIAL_PROJECTS.filter(
+				(project) => project.getType() === 'default'
+			);
+
 			const projectsString = JSON.stringify(projects);
-			const initialProjectsString = JSON.stringify(INITIAL_PROJECTS);
+			const initialProjectsString = JSON.stringify(
+				defaultInitialProjects
+			);
 			localStorage.setItem('projects', projectsString);
 			localStorage.setItem('initialProjects', initialProjectsString);
 		});
@@ -150,20 +156,34 @@ export default (function Project() {
 			localStorage.getItem('initialProjects')
 		);
 
-		if (localProjects == null) {
-			return false;
+		if (localProjects != null) {
+			projects = [];
+			localProjects.forEach((project) => {
+				const newProject = { ...defaultProject, ...project };
+				const newTodos = newProject.getTodos();
+				newTodos.forEach((todo) => {
+					Object.assign(todo, defaultTodo);
+					todo.parseDueDate();
+				});
+				projects.push(newProject);
+			});
 		}
 
-		projects = [];
-		localProjects.forEach((project) => {
-			const newProject = { ...defaultProject, ...project };
-			const newTodos = newProject.getTodos();
-			newTodos.forEach((todo) => {
-				Object.assign(todo, defaultTodo);
-				todo.parseDueDate();
+		if (localInitialProjects != null) {
+			localInitialProjects.forEach((project) => {
+				Object.assign(project, defaultProject);
+				project.todos.forEach((todo) => {
+					Object.assign(todo, defaultTodo);
+					todo.parseDueDate();
+				});
+				const localProject = INITIAL_PROJECTS.find(
+					(element) => element.getName() === project.getName()
+				);
+				if (localProject) {
+					localProject.setTodos(project.todos);
+				}
 			});
-			projects.push(newProject);
-		});
+		}
 	}
 
 	function createProject(data) {
