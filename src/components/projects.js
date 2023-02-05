@@ -108,6 +108,11 @@ export default (function Project() {
 			const parsedDate = newDueDate ? parseISO(newDueDate) : null;
 			this.dueDate = parsedDate ? parsedDate : null;
 		},
+		parseDueDate() {
+			if (this.dueDate != null) {
+				this.dueDate = parseISO(this.dueDate);
+			}
+		},
 	};
 
 	let INITIAL_PROJECTS = [
@@ -170,6 +175,8 @@ export default (function Project() {
 			const newTodos = newProject.getTodos();
 			newTodos.forEach((todo) => {
 				Object.assign(todo, defaultTodo);
+				console.log(todo);
+				todo.parseDueDate();
 			});
 			projects.push(newProject);
 		});
