@@ -160,12 +160,10 @@ export default (function Project() {
 			const newTodos = newProject.getTodos();
 			newTodos.forEach((todo) => {
 				Object.assign(todo, defaultTodo);
-				console.log(todo);
 				todo.parseDueDate();
 			});
 			projects.push(newProject);
 		});
-		console.log(projects);
 	}
 
 	function createProject(data) {
@@ -326,8 +324,6 @@ export default (function Project() {
 			todo.editDueDate(formData.get('oldTodoDueDate'));
 		}
 
-		console.log(todo);
-
 		PubSub.publish('dataChanged');
 
 		return true;
@@ -365,11 +361,6 @@ export default (function Project() {
 			if (!dueDate) {
 				return false;
 			}
-			console.log(
-				dueDate,
-				todayDate,
-				differenceInDays(dueDate, todayDate)
-			);
 			if (
 				differenceInDays(dueDate, todayDate) <=
 				filterProject.getFilter()
