@@ -151,26 +151,27 @@ export default (function Project() {
 	}
 
 	function loadLocalStorage() {
-		const localProjects = JSON.parse(localStorage.getItem('projects'));
-		const localInitialProjects = JSON.parse(
+		const storedProjects = JSON.parse(localStorage.getItem('projects'));
+		const storedInitialProjects = JSON.parse(
 			localStorage.getItem('initialProjects')
 		);
 
-		if (localProjects != null) {
+		if (storedProjects != null) {
 			projects = [];
-			localProjects.forEach((project) => {
-				const newProject = { ...defaultProject, ...project };
-				const newTodos = newProject.getTodos();
-				newTodos.forEach((todo) => {
+			storedProjects.forEach((project) => {
+				Object.assign(project, defaultProject);
+				const todos = project.getTodos();
+
+				todos.forEach((todo) => {
 					Object.assign(todo, defaultTodo);
 					todo.parseDueDate();
 				});
-				projects.push(newProject);
+				projects.push(project);
 			});
 		}
 
-		if (localInitialProjects != null) {
-			localInitialProjects.forEach((project) => {
+		if (storedInitialProjects != null) {
+			storedInitialProjects.forEach((project) => {
 				Object.assign(project, defaultProject);
 				project.todos.forEach((todo) => {
 					Object.assign(todo, defaultTodo);
