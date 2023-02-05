@@ -129,14 +129,6 @@ export default (function Project() {
 		}),
 	];
 
-	// placeholder project
-	const placeholderProjectData = new FormData();
-	placeholderProjectData.append('project-name', 'test-project');
-	const placeholderTodoData = new FormData();
-	placeholderTodoData.append('todo-name', 'test-todo');
-	createProject(placeholderProjectData);
-	createTodo(placeholderTodoData, 'test-project', false);
-
 	// * * *
 	// PROJECTS
 	// * * *
