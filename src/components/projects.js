@@ -301,9 +301,12 @@ export default (function Project() {
 		return true;
 	}
 
-	function removeTodo(projectName, todoName, initial) {
-		const project = getProject(projectName, initial);
-		project.removeTodo(todoName);
+	function removeTodo(project, todo) {
+		if (todo.origin) {
+			const origin = todo.origin;
+			project = getProject(origin.projectName, origin.initial);
+		}
+		project.removeTodo(todo.getName());
 		PubSub.publish('dataChanged');
 	}
 
@@ -358,11 +361,23 @@ export default (function Project() {
 
 		projects.forEach((project) => {
 			const todos = project.getTodos();
+			todos.forEach((todo) => {
+				todo.origin = {
+					projectName: project.getName(),
+					initial: false,
+				};
+			});
 			projectsTodos = [...projectsTodos, ...todos];
 		});
 		INITIAL_PROJECTS.forEach((project) => {
 			if (project.getType() === 'default') {
 				const todos = project.getTodos();
+				todos.forEach((todo) => {
+					todo.origin = {
+						projectName: project.getName(),
+						initial: true,
+					};
+				});
 				initialProjectsTodos = [...initialProjectsTodos, ...todos];
 			}
 		});

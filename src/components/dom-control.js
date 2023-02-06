@@ -46,7 +46,7 @@ export default (function DomControl() {
 		PubSub.subscribe('todosChanged', (msg, projectName) => {
 			clearMainElement();
 			renderProject(
-				projectName,
+				activeProject.name,
 				activeProject.type === 'initial' ? true : false
 			);
 		});
@@ -311,7 +311,7 @@ export default (function DomControl() {
 			todoCollapseElement.appendChild(todoControlsElement);
 
 			todoDeleteButton.addEventListener('click', (e) => {
-				Project.removeTodo(project.getName(), todo.getName(), initial);
+				Project.removeTodo(project, todo);
 			});
 
 			todoBasicInfoElement.appendChild(todoCollapseButton);
