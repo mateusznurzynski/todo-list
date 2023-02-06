@@ -240,11 +240,13 @@ nav {
 	gap: 5px;
 	padding: 15px 20px;
 	white-space: nowrap;
+	transition: all 0.2s;
 }
 
 .todo-completed {
 	background-color: var(--success);
 	color: white;
+	transition: all 0.2s;
 }
 
 .todo-form-wrapper {
@@ -402,6 +404,7 @@ nav {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	transition: all 0.2s;
 }
 .todo-complete-btn:hover {
 	background-color: var(--success-hover);
@@ -409,6 +412,7 @@ nav {
 
 .todo-complete-btn.completed {
 	background-color: var(--warning);
+	transition: all 0.2s;
 }
 .todo-complete-btn.completed:hover {
 	background-color: var(--warning-hover);
