@@ -380,6 +380,9 @@ export default (function Project() {
 		const todayDate = new Date();
 
 		const filteredTodos = allTodos.filter((todo) => {
+			if (todo.getCompleted()) {
+				return false;
+			}
 			const dueDate = todo.getDueDate();
 			if (!dueDate) {
 				return false;
