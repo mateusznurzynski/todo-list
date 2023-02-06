@@ -42,6 +42,7 @@ input[type='submit'] {
 
 	--danger-hover: #fd3e51;
 	--success-hover: #31b14f;
+	--warning-hover: #ffc929;
 }
 
 body {
@@ -396,9 +397,15 @@ nav {
 	justify-content: center;
 	align-items: center;
 }
-
 .todo-complete-btn:hover {
 	background-color: var(--success-hover);
+}
+
+.todo-complete-btn.completed {
+	background-color: var(--warning);
+}
+.todo-complete-btn.completed:hover {
+	background-color: var(--warning-hover);
 }
 
 .todo-details,

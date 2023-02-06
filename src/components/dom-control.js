@@ -535,7 +535,9 @@ export default (function DomControl() {
 			<div class="details-wrapper uneditable">Creation date: ${todo.getCreationDate()}</div>`
 		);
 
-		const todoCompleteText = `Mark as completed`;
+		const todoCompleteText = todo.getCompleted()
+			? 'Mark as uncompleted'
+			: 'Mark as completed';
 
 		const todoBasicInfoElement =
 			todoElement.querySelector('.basic-info-text');
@@ -546,13 +548,19 @@ export default (function DomControl() {
 		const todoCompleteButtonElement =
 			todoElement.querySelector('.todo-complete-btn');
 
+		if (todo.getCompleted()) {
+			todoCompleteButtonElement.classList.add('completed');
+		} else {
+			todoCompleteButtonElement.classList.remove('completed');
+		}
+
 		todoBasicInfoElement.innerHTML = '';
 		todoDetailsContainerElement.innerHTML = '';
 		todoCompleteButtonElement.textContent = '';
 
 		todoBasicInfoElement.appendChild(todoBasicInfo);
 		todoDetailsContainerElement.appendChild(todoDetailedInfo);
-		todoCompleteButtonElement.textContent = `Mark as completed`;
+		todoCompleteButtonElement.textContent = todoCompleteText;
 	}
 
 	return {
