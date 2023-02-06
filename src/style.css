@@ -242,6 +242,11 @@ nav {
 	white-space: nowrap;
 }
 
+.todo-completed {
+	background-color: var(--success);
+	color: white;
+}
+
 .todo-form-wrapper {
 	display: flex;
 	justify-content: center;
@@ -341,6 +346,7 @@ nav {
 
 .todo-details-container {
 	background-color: white;
+	color: black;
 	width: 100%;
 }
 
