@@ -238,6 +238,9 @@ export default (function DomControl() {
 		todos.forEach((todo) => {
 			const todoId = todos.indexOf(todo);
 			const todoElement = todoDefaultElement.cloneNode(true);
+			if (todo.getCompleted()) {
+				todoElement.classList.add('todo-completed');
+			}
 			const todoBasicInfoElement = createDomElement(
 				'div',
 				'todo-basic-info',
@@ -293,6 +296,7 @@ export default (function DomControl() {
 					todo.getName(),
 					initial
 				);
+				refreshTodoElementContent(todo, todoElement);
 			});
 			const todoEditButton = createDomElement(
 				'div',
@@ -504,6 +508,11 @@ export default (function DomControl() {
 	}
 
 	function refreshTodoElementContent(todo, todoElement) {
+		if (todo.getCompleted()) {
+			todoElement.classList.add('todo-completed');
+		} else {
+			todoElement.classList.remove('todo-completed');
+		}
 		const todoBasicInfo = createDomElement(
 			'div',
 			'',

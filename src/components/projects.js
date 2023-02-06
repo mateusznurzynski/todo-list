@@ -95,6 +95,9 @@ export default (function Project() {
 				return this.description;
 			}
 		},
+		getCompleted() {
+			return this.completed;
+		},
 		toggleCompleted() {
 			this.completed = !this.completed;
 		},
@@ -161,7 +164,6 @@ export default (function Project() {
 			storedProjects.forEach((project) => {
 				Object.assign(project, defaultProject);
 				const todos = project.getTodos();
-
 				todos.forEach((todo) => {
 					Object.assign(todo, defaultTodo);
 					todo.parseDueDate();
