@@ -362,10 +362,7 @@ export default (function Project() {
 		projects.forEach((project) => {
 			const todos = project.getTodos();
 			todos.forEach((todo) => {
-				todo.origin = {
-					projectName: project.getName(),
-					initial: false,
-				};
+				refreshTodoOrigin(todo, project);
 			});
 			projectsTodos = [...projectsTodos, ...todos];
 		});
@@ -385,6 +382,13 @@ export default (function Project() {
 		const allTodos = [...projectsTodos, ...initialProjectsTodos];
 
 		return allTodos;
+	}
+
+	function refreshTodoOrigin(todoObject, projectObject) {
+		todoObject.origin = {
+			projectName: projectObject.getName(),
+			initial: false,
+		};
 	}
 
 	function filterTodos(filterProject) {
